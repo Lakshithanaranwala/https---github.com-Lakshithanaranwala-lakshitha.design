@@ -332,9 +332,11 @@ section {
 }
 
 .future-object-shell:hover {
-  --rx: -8deg;
-  --ry: 30deg;
-  filter: drop-shadow(0 20px 34px var(--obj-glow-cyan));
+  --rx: -2deg;
+  --ry: 40deg;
+  filter:
+    drop-shadow(0 26px 42px var(--obj-glow-cyan))
+    drop-shadow(0 0 44px var(--obj-glow-orange));
 }
 
 .future-object {
@@ -409,35 +411,38 @@ section {
 }
 
 .future-object-shell:hover .ring-a {
-  transform: rotateX(84deg) rotateY(20deg) translateZ(18px) scale(1.06);
+  transform: rotateX(98deg) rotateY(34deg) translateZ(34px) scale(1.2);
 }
 
 .future-object-shell:hover .ring-b {
-  transform: rotateY(88deg) rotateZ(30deg) translateZ(-3px) scale(0.95);
+  transform: rotateY(112deg) rotateZ(54deg) translateZ(-20px) scale(0.8);
 }
 
 .future-object-shell:hover .ring-c {
-  transform: rotateX(34deg) rotateY(38deg) translateZ(26px) scale(0.74);
+  transform: rotateX(56deg) rotateY(72deg) translateZ(44px) scale(0.62);
 }
 
 .future-object-shell:hover .blade-a {
-  transform: rotate(12deg) translateZ(26px) scaleX(1.08);
+  transform: rotate(24deg) translateZ(42px) scaleX(1.3);
 }
 
 .future-object-shell:hover .blade-b {
-  transform: rotate(78deg) translateZ(10px) scaleX(0.64);
+  transform: rotate(112deg) translateZ(-6px) scaleX(0.46);
 }
 
 .future-object-shell:hover .blade-c {
-  transform: rotate(128deg) translateZ(34px) scaleX(0.9);
+  transform: rotate(164deg) translateZ(52px) scaleX(1.18);
 }
 
 .future-object-shell:hover .blade-d {
-  transform: rotate(200deg) translateZ(14px) scaleX(0.62);
+  transform: rotate(242deg) translateZ(-12px) scaleX(0.4);
 }
 
 .future-object-shell:hover .object-core {
-  transform: translateZ(48px) scale(1.12);
+  transform: translateZ(68px) scale(1.26);
+  box-shadow:
+    0 0 44px rgba(66, 212, 232, 0.62),
+    0 0 98px rgba(255, 138, 100, 0.52);
 }
 
 .hero-copy {
