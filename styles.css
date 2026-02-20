@@ -31,13 +31,6 @@
   --mask-solid: #000;
   --switch-track: #d7c5b2;
   --switch-thumb: #fffaf3;
-  --glass-tint: rgba(255, 255, 255, 0.2);
-  --glass-border: rgba(255, 255, 255, 0.46);
-  --glass-reflect: rgba(255, 255, 255, 0.5);
-  --glass-ball-a: rgba(115, 221, 241, 0.78);
-  --glass-ball-b: rgba(238, 159, 125, 0.75);
-  --glass-ball-c: rgba(162, 210, 255, 0.75);
-  --glass-glow: rgba(80, 186, 225, 0.3);
   --radius: 18px;
 }
 
@@ -74,13 +67,6 @@
   --mask-solid: #fff;
   --switch-track: #344250;
   --switch-thumb: #d7e2ec;
-  --glass-tint: rgba(184, 210, 232, 0.11);
-  --glass-border: rgba(180, 209, 231, 0.32);
-  --glass-reflect: rgba(210, 232, 255, 0.38);
-  --glass-ball-a: rgba(118, 230, 250, 0.78);
-  --glass-ball-b: rgba(255, 157, 126, 0.76);
-  --glass-ball-c: rgba(183, 214, 255, 0.75);
-  --glass-glow: rgba(111, 214, 248, 0.35);
 }
 
 * {
@@ -274,17 +260,6 @@ section {
   padding-top: 4.5rem;
 }
 
-.hero-top {
-  display: grid;
-  grid-template-columns: 1.15fr minmax(240px, 340px);
-  align-items: center;
-  gap: clamp(1rem, 2.5vw, 2rem);
-}
-
-.hero-content h1 {
-  margin-bottom: 0.35rem;
-}
-
 .eyebrow {
   text-transform: uppercase;
   letter-spacing: 0.14em;
@@ -298,143 +273,6 @@ section {
   font-size: clamp(2rem, 4vw, 4rem);
   max-width: 14ch;
   margin-bottom: 1rem;
-}
-
-.hero-object-zone {
-  display: flex;
-  justify-content: center;
-  perspective: 1100px;
-}
-
-.glass-box-3d {
-  --rx: -12deg;
-  --ry: 18deg;
-  --depth: 58px;
-  width: clamp(220px, 25vw, 320px);
-  height: clamp(220px, 25vw, 320px);
-  position: relative;
-  transform-style: preserve-3d;
-  transform: rotateX(var(--rx)) rotateY(var(--ry));
-  transition: transform 0.24s ease;
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03));
-  border: 1px solid var(--glass-border);
-  border-radius: 22px;
-  box-shadow:
-    inset 0 1px 0 var(--glass-reflect),
-    0 18px 40px rgba(0, 0, 0, 0.16);
-}
-
-.glass-face {
-  position: absolute;
-  inset: 0;
-  border-radius: 22px;
-  background: var(--glass-tint);
-  border: 1px solid var(--glass-border);
-  box-shadow: inset 0 1px 0 var(--glass-reflect);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-.glass-box-3d::before {
-  content: '';
-  position: absolute;
-  inset: 8px;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  transform: translateZ(calc(var(--depth) * 0.32));
-  pointer-events: none;
-}
-
-.glass-face.front {
-  transform: translateZ(calc(var(--depth) * 0.5));
-}
-
-.glass-face.back {
-  transform: rotateY(180deg) translateZ(calc(var(--depth) * 0.5));
-}
-
-.glass-face.left {
-  transform: rotateY(-90deg) translateZ(calc(var(--depth) * 0.5));
-}
-
-.glass-face.right {
-  transform: rotateY(90deg) translateZ(calc(var(--depth) * 0.5));
-}
-
-.glass-face.top {
-  transform: rotateX(90deg) translateZ(calc(var(--depth) * 0.5));
-}
-
-.glass-face.bottom {
-  transform: rotateX(-90deg) translateZ(calc(var(--depth) * 0.5));
-}
-
-.glass-liquid-line {
-  position: absolute;
-  left: 8%;
-  right: 8%;
-  top: 50%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--glass-reflect), transparent);
-  transform: translateZ(calc(var(--depth) * 0.5));
-  pointer-events: none;
-}
-
-.glass-balls {
-  position: absolute;
-  inset: 12%;
-  overflow: hidden;
-  border-radius: 16px;
-  transform: translateZ(calc(var(--depth) * 0.5 - 2px));
-  pointer-events: none;
-}
-
-.glass-ball {
-  --x: 0%;
-  --y: 0%;
-  --depth-z: 0px;
-  --size: 26px;
-  --dx: 0px;
-  --dy: 0px;
-  --lift: 0px;
-  position: absolute;
-  width: var(--size);
-  height: var(--size);
-  left: var(--x);
-  top: var(--y);
-  border-radius: 50%;
-  transform: translate3d(var(--dx), var(--dy), calc(var(--depth-z) + var(--lift)));
-  transition: transform 0.55s cubic-bezier(0.2, 0.85, 0.25, 1), filter 0.45s ease;
-  box-shadow:
-    inset -6px -10px 16px rgba(255, 255, 255, 0.18),
-    inset 8px 10px 16px rgba(255, 255, 255, 0.32),
-    0 8px 18px var(--glass-glow);
-}
-
-.glass-ball::after {
-  content: '';
-  position: absolute;
-  width: 32%;
-  height: 32%;
-  top: 14%;
-  left: 16%;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.55);
-  filter: blur(0.4px);
-}
-
-.glass-ball.b1 { --size: 32px; --x: 6%; --y: 56%; --depth-z: 8px; background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.88), var(--glass-ball-a)); }
-.glass-ball.b2 { --size: 24px; --x: 22%; --y: 66%; --depth-z: 2px; background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.84), var(--glass-ball-b)); }
-.glass-ball.b3 { --size: 30px; --x: 36%; --y: 60%; --depth-z: 12px; background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), var(--glass-ball-c)); }
-.glass-ball.b4 { --size: 26px; --x: 52%; --y: 68%; --depth-z: 4px; background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.88), var(--glass-ball-a)); }
-.glass-ball.b5 { --size: 34px; --x: 64%; --y: 54%; --depth-z: 10px; background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.88), var(--glass-ball-b)); }
-.glass-ball.b6 { --size: 22px; --x: 78%; --y: 68%; --depth-z: 2px; background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.86), var(--glass-ball-c)); }
-.glass-ball.b7 { --size: 24px; --x: 10%; --y: 76%; --depth-z: 0px; background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.85), var(--glass-ball-b)); }
-.glass-ball.b8 { --size: 20px; --x: 44%; --y: 78%; --depth-z: 0px; background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.85), var(--glass-ball-a)); }
-.glass-ball.b9 { --size: 26px; --x: 70%; --y: 76%; --depth-z: 6px; background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), var(--glass-ball-c)); }
-
-.glass-box-3d.active .glass-ball {
-  filter: saturate(1.12) brightness(1.05);
 }
 
 .hero-copy {
@@ -669,15 +507,6 @@ section {
 }
 
 @media (max-width: 1000px) {
-  .hero-top {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-object-zone {
-    order: 2;
-    margin-top: 0.4rem;
-  }
-
   .study-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -731,11 +560,6 @@ section {
   .study-grid,
   .timeline {
     grid-template-columns: 1fr;
-  }
-
-  .glass-box-3d {
-    width: min(78vw, 280px);
-    height: min(78vw, 280px);
   }
 
   .logo-item {
