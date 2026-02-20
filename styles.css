@@ -31,6 +31,16 @@
   --mask-solid: #000;
   --switch-track: #d7c5b2;
   --switch-thumb: #fffaf3;
+  --obj-cyan: #42d4e8;
+  --obj-orange: #ff8a64;
+  --obj-shell-cyan: rgba(66, 212, 232, 0.24);
+  --obj-shell-orange: rgba(255, 138, 100, 0.2);
+  --obj-ring: rgba(45, 34, 24, 0.3);
+  --obj-ring-strong: rgba(255, 138, 100, 0.64);
+  --obj-blade-a: rgba(66, 212, 232, 0.82);
+  --obj-blade-b: rgba(255, 138, 100, 0.64);
+  --obj-glow-cyan: rgba(66, 212, 232, 0.36);
+  --obj-glow-orange: rgba(255, 138, 100, 0.22);
   --radius: 18px;
 }
 
@@ -67,6 +77,16 @@
   --mask-solid: #fff;
   --switch-track: #344250;
   --switch-thumb: #d7e2ec;
+  --obj-cyan: #77e6f4;
+  --obj-orange: #ff9b7a;
+  --obj-shell-cyan: rgba(119, 230, 244, 0.26);
+  --obj-shell-orange: rgba(255, 155, 122, 0.24);
+  --obj-ring: rgba(232, 238, 245, 0.34);
+  --obj-ring-strong: rgba(255, 188, 166, 0.72);
+  --obj-blade-a: rgba(119, 230, 244, 0.84);
+  --obj-blade-b: rgba(255, 155, 122, 0.68);
+  --obj-glow-cyan: rgba(119, 230, 244, 0.45);
+  --obj-glow-orange: rgba(255, 155, 122, 0.3);
 }
 
 * {
@@ -296,6 +316,7 @@ section {
   --rx: -14deg;
   --ry: 22deg;
   width: clamp(220px, 26vw, 340px);
+  height: clamp(220px, 26vw, 340px);
   aspect-ratio: 1 / 1;
   border-radius: 24px;
   display: grid;
@@ -305,14 +326,15 @@ section {
   transform: rotateX(var(--rx)) rotateY(var(--ry));
   transition: transform 0.28s ease, filter 0.3s ease;
   background:
-    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--accent-2), transparent 76%), transparent 48%),
-    radial-gradient(circle at 70% 80%, color-mix(in srgb, var(--accent), transparent 80%), transparent 52%);
+    radial-gradient(circle at 30% 20%, var(--obj-shell-cyan), transparent 48%),
+    radial-gradient(circle at 70% 80%, var(--obj-shell-orange), transparent 52%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
 }
 
 .future-object-shell:hover {
   --rx: -8deg;
   --ry: 30deg;
-  filter: drop-shadow(0 20px 34px color-mix(in srgb, var(--accent-2), transparent 70%));
+  filter: drop-shadow(0 20px 34px var(--obj-glow-cyan));
 }
 
 .future-object {
@@ -328,10 +350,10 @@ section {
   inset: 34% 34%;
   border-radius: 50%;
   transform: translateZ(36px);
-  background: radial-gradient(circle at 35% 35%, #fff, color-mix(in srgb, var(--accent-2), #fff 18%) 28%, var(--accent) 72%);
+  background: radial-gradient(circle at 35% 35%, #fff, var(--obj-cyan) 30%, var(--obj-orange) 72%);
   box-shadow:
-    0 0 26px color-mix(in srgb, var(--accent-2), transparent 58%),
-    0 0 58px color-mix(in srgb, var(--accent), transparent 78%);
+    0 0 26px var(--obj-glow-cyan),
+    0 0 58px var(--obj-glow-orange);
   animation: core-pulse 2.8s ease-in-out infinite;
 }
 
@@ -344,8 +366,8 @@ section {
 }
 
 .ring {
-  border: 1.4px solid color-mix(in srgb, var(--text), transparent 68%);
-  box-shadow: 0 0 16px color-mix(in srgb, var(--accent-2), transparent 85%);
+  border: 1.4px solid var(--obj-ring);
+  box-shadow: 0 0 16px rgba(66, 212, 232, 0.18);
 }
 
 .ring-a {
@@ -358,7 +380,7 @@ section {
 
 .ring-c {
   transform: rotateX(16deg) rotateY(16deg) translateZ(14px) scale(0.84);
-  border-color: color-mix(in srgb, var(--accent), transparent 36%);
+  border-color: var(--obj-ring-strong);
 }
 
 .blade {
@@ -366,8 +388,8 @@ section {
   height: 12%;
   inset: 44% 22%;
   border-radius: 999px;
-  background: linear-gradient(90deg, color-mix(in srgb, var(--accent-2), transparent 28%), color-mix(in srgb, var(--accent), transparent 45%));
-  box-shadow: 0 0 14px color-mix(in srgb, var(--accent-2), transparent 72%);
+  background: linear-gradient(90deg, var(--obj-blade-a), var(--obj-blade-b));
+  box-shadow: 0 0 14px var(--obj-glow-cyan);
 }
 
 .blade-a {
@@ -653,13 +675,13 @@ section {
   0%,
   100% {
     box-shadow:
-      0 0 26px color-mix(in srgb, var(--accent-2), transparent 58%),
-      0 0 58px color-mix(in srgb, var(--accent), transparent 78%);
+      0 0 26px var(--obj-glow-cyan),
+      0 0 58px var(--obj-glow-orange);
   }
   50% {
     box-shadow:
-      0 0 34px color-mix(in srgb, var(--accent-2), transparent 45%),
-      0 0 72px color-mix(in srgb, var(--accent), transparent 68%);
+      0 0 34px rgba(66, 212, 232, 0.54),
+      0 0 72px rgba(255, 138, 100, 0.38);
   }
 }
 
