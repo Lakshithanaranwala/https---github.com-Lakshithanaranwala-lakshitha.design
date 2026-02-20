@@ -263,10 +263,84 @@ section {
   margin-bottom: 0.7rem;
 }
 
-.hero h1 {
+.hero-title-wrap {
+  position: relative;
+  display: inline-block;
+  --mx: 50%;
+  --my: 50%;
+  --lens-size: 132px;
+}
+
+.hero-title-main,
+.hero-title-zoom {
   font-size: clamp(2rem, 4vw, 4rem);
   max-width: 14ch;
   margin-bottom: 1rem;
+}
+
+.hero-title-main {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-title-wrap:hover .hero-title-main {
+  cursor: none;
+}
+
+.hero-title-zoom {
+  display: block;
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  color: var(--text);
+  pointer-events: none;
+  transform: scale(1.26);
+  transform-origin: var(--mx) var(--my);
+  clip-path: circle(var(--lens-size) at var(--mx) var(--my));
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 2;
+  text-shadow: 0 0 1px color-mix(in srgb, var(--text), transparent 30%);
+}
+
+.hero-title-wrap.active .hero-title-zoom {
+  opacity: 1;
+}
+
+.magnifier-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 46px;
+  height: 46px;
+  border: 2px solid color-mix(in srgb, var(--accent-2), var(--text) 26%);
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--surface), transparent 35%),
+    0 8px 20px color-mix(in srgb, var(--text), transparent 82%);
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.86);
+  opacity: 0;
+  transition: opacity 0.18s ease, transform 0.2s ease;
+  z-index: 60;
+}
+
+.magnifier-cursor::after {
+  content: '';
+  position: absolute;
+  width: 13px;
+  height: 3px;
+  right: -8px;
+  bottom: 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent-2), var(--text) 26%);
+  transform: rotate(37deg);
+  transform-origin: center;
+}
+
+.hero-title-wrap.active .magnifier-cursor {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .hero-copy {
@@ -568,5 +642,16 @@ section {
   .cv-card {
     flex-direction: column;
     align-items: flex-start;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .hero-title-zoom,
+  .magnifier-cursor {
+    display: none;
+  }
+
+  .hero-title-wrap:hover .hero-title-main {
+    cursor: auto;
   }
 }
