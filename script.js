@@ -62,36 +62,22 @@ const observer = new IntersectionObserver(
 revealNodes.forEach((node) => observer.observe(node));
 
 const heroTitleWrap = document.querySelector('.hero-title-wrap');
-const magnifierCursor = document.querySelector('.magnifier-cursor');
 
-if (heroTitleWrap && magnifierCursor && window.matchMedia('(hover: hover)').matches) {
+if (heroTitleWrap && window.matchMedia('(hover: hover)').matches) {
   let rafId = null;
   let targetX = 0;
   let targetY = 0;
   let currentX = 0;
   let currentY = 0;
-  let targetClientX = 0;
-  let targetClientY = 0;
-  let currentClientX = 0;
-  let currentClientY = 0;
 
   const tick = () => {
     currentX += (targetX - currentX) * 0.2;
     currentY += (targetY - currentY) * 0.2;
-    currentClientX += (targetClientX - currentClientX) * 0.2;
-    currentClientY += (targetClientY - currentClientY) * 0.2;
 
     heroTitleWrap.style.setProperty('--mx', `${currentX}px`);
     heroTitleWrap.style.setProperty('--my', `${currentY}px`);
-    magnifierCursor.style.left = `${currentClientX}px`;
-    magnifierCursor.style.top = `${currentClientY}px`;
 
-    if (
-      Math.abs(targetX - currentX) > 0.08 ||
-      Math.abs(targetY - currentY) > 0.08 ||
-      Math.abs(targetClientX - currentClientX) > 0.08 ||
-      Math.abs(targetClientY - currentClientY) > 0.08
-    ) {
+    if (Math.abs(targetX - currentX) > 0.08 || Math.abs(targetY - currentY) > 0.08) {
       rafId = requestAnimationFrame(tick);
     } else {
       rafId = null;
@@ -108,10 +94,6 @@ if (heroTitleWrap && magnifierCursor && window.matchMedia('(hover: hover)').matc
     targetY = event.clientY - rect.top;
     currentX = targetX;
     currentY = targetY;
-    targetClientX = event.clientX;
-    targetClientY = event.clientY;
-    currentClientX = targetClientX;
-    currentClientY = targetClientY;
     heroTitleWrap.classList.add('active');
     queueTick();
   });
@@ -120,8 +102,6 @@ if (heroTitleWrap && magnifierCursor && window.matchMedia('(hover: hover)').matc
     const rect = heroTitleWrap.getBoundingClientRect();
     targetX = Math.max(0, Math.min(event.clientX - rect.left, rect.width));
     targetY = Math.max(0, Math.min(event.clientY - rect.top, rect.height));
-    targetClientX = event.clientX;
-    targetClientY = event.clientY;
     queueTick();
   });
 

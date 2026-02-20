@@ -268,7 +268,7 @@ section {
   display: inline-block;
   --mx: 50%;
   --my: 50%;
-  --lens-size: 132px;
+  --lens-size: 126px;
 }
 
 .hero-title-main,
@@ -283,10 +283,6 @@ section {
   z-index: 1;
 }
 
-.hero-title-wrap:hover .hero-title-main {
-  cursor: none;
-}
-
 .hero-title-zoom {
   display: block;
   position: absolute;
@@ -298,49 +294,41 @@ section {
   transform-origin: var(--mx) var(--my);
   clip-path: circle(var(--lens-size) at var(--mx) var(--my));
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
   z-index: 2;
-  text-shadow: 0 0 1px color-mix(in srgb, var(--text), transparent 30%);
+  text-shadow:
+    0 0 1px color-mix(in srgb, var(--text), transparent 30%),
+    0 0 14px color-mix(in srgb, var(--accent-2), transparent 84%);
+  filter: saturate(1.08) contrast(1.04);
 }
 
 .hero-title-wrap.active .hero-title-zoom {
   opacity: 1;
+  transform: scale(1.28);
 }
 
-.magnifier-cursor {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 46px;
-  height: 46px;
-  border: 2px solid color-mix(in srgb, var(--accent-2), var(--text) 26%);
-  border-radius: 50%;
-  box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--surface), transparent 35%),
-    0 8px 20px color-mix(in srgb, var(--text), transparent 82%);
-  pointer-events: none;
-  transform: translate(-50%, -50%) scale(0.86);
-  opacity: 0;
-  transition: opacity 0.18s ease, transform 0.2s ease;
-  z-index: 60;
-}
-
-.magnifier-cursor::after {
+.hero-title-wrap::after {
   content: '';
   position: absolute;
-  width: 13px;
-  height: 3px;
-  right: -8px;
-  bottom: 6px;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--accent-2), var(--text) 26%);
-  transform: rotate(37deg);
-  transform-origin: center;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  clip-path: circle(var(--lens-size) at var(--mx) var(--my));
+  background:
+    radial-gradient(circle at var(--mx) var(--my), rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.03) 60%, transparent 72%),
+    radial-gradient(circle at calc(var(--mx) - 14px) calc(var(--my) - 16px), rgba(255, 255, 255, 0.38), transparent 32%);
+  transition: opacity 0.2s ease;
 }
 
-.hero-title-wrap.active .magnifier-cursor {
+:root[data-theme='dark'] .hero-title-wrap::after {
+  background:
+    radial-gradient(circle at var(--mx) var(--my), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.02) 60%, transparent 72%),
+    radial-gradient(circle at calc(var(--mx) - 14px) calc(var(--my) - 16px), rgba(183, 215, 255, 0.22), transparent 32%);
+}
+
+.hero-title-wrap.active::after {
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
 }
 
 .hero-copy {
@@ -647,11 +635,7 @@ section {
 
 @media (hover: none), (pointer: coarse) {
   .hero-title-zoom,
-  .magnifier-cursor {
+  .hero-title-wrap::after {
     display: none;
-  }
-
-  .hero-title-wrap:hover .hero-title-main {
-    cursor: auto;
   }
 }
