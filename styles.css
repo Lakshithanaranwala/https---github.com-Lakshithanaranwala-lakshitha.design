@@ -344,7 +344,7 @@ section {
 .logo-marquee {
   width: 100%;
   display: flex;
-  gap: 0;
+  gap: 0.85rem;
   overflow: hidden;
   mask-image: linear-gradient(to right, transparent, var(--mask-solid) 10%, var(--mask-solid) 90%, transparent);
 }
