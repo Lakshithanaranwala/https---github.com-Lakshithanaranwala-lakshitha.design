@@ -202,6 +202,51 @@ section {
   color: var(--muted);
 }
 
+.logo-loop {
+  padding: 1rem 0 3rem;
+  background: transparent;
+}
+
+.logo-marquee {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.logo-track {
+  min-width: max-content;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  animation: logo-scroll 22s linear infinite;
+}
+
+.logo-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.55rem 0.9rem;
+  background: rgba(255, 250, 243, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.logo-item img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.logo-item span {
+  font-size: 0.84rem;
+  color: var(--muted);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
 .section-head {
   margin-bottom: 1.5rem;
 }
@@ -309,6 +354,15 @@ section {
   transform: translateY(0);
 }
 
+@keyframes logo-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - 0.5rem));
+  }
+}
+
 @media (max-width: 1000px) {
   .study-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -355,6 +409,15 @@ section {
   .study-grid,
   .timeline {
     grid-template-columns: 1fr;
+  }
+
+  .logo-item {
+    padding: 0.48rem 0.78rem;
+  }
+
+  .logo-item img {
+    width: 22px;
+    height: 22px;
   }
 
   .cv-card {
