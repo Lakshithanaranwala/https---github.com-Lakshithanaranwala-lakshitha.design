@@ -267,11 +267,19 @@ section {
 }
 
 .study-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: linear-gradient(
+    140deg,
+    rgba(255, 250, 243, 0.78),
+    rgba(255, 250, 243, 0.52)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.48);
   border-radius: var(--radius);
   padding: 1.2rem;
-  box-shadow: var(--shadow);
+  box-shadow:
+    0 14px 28px rgba(58, 41, 26, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .tag {
@@ -293,7 +301,7 @@ section {
 .study-card li,
 .about p,
 .timeline p {
-  color: var(--muted);
+  color: #4e3e30;
 }
 
 .study-card ul {
@@ -303,7 +311,7 @@ section {
 .study-card a {
   display: inline-block;
   margin-top: 0.4rem;
-  color: var(--accent-2);
+  color: #0f5f6f;
   font-weight: 700;
   text-decoration: none;
 }
