@@ -63,7 +63,7 @@ revealNodes.forEach((node) => observer.observe(node));
 
 const heroTitleWrap = document.querySelector('.hero-title-wrap');
 
-if (heroTitleWrap && window.matchMedia('(hover: hover)').matches) {
+if (heroTitleWrap && !window.matchMedia('(hover: none), (pointer: coarse)').matches) {
   let rafId = null;
   let targetX = 0;
   let targetY = 0;
@@ -88,30 +88,39 @@ if (heroTitleWrap && window.matchMedia('(hover: hover)').matches) {
     if (!rafId) rafId = requestAnimationFrame(tick);
   };
 
-  heroTitleWrap.addEventListener('pointerenter', (event) => {
+  const updateTargetFromEvent = (event) => {
     const rect = heroTitleWrap.getBoundingClientRect();
-    targetX = event.clientX - rect.left;
-    targetY = event.clientY - rect.top;
+    targetX = Math.max(0, Math.min(event.clientX - rect.left, rect.width));
+    targetY = Math.max(0, Math.min(event.clientY - rect.top, rect.height));
+  };
+
+  const handleEnter = (event) => {
+    updateTargetFromEvent(event);
     currentX = targetX;
     currentY = targetY;
     heroTitleWrap.classList.add('active');
     queueTick();
-  });
+  };
 
-  heroTitleWrap.addEventListener('pointermove', (event) => {
-    const rect = heroTitleWrap.getBoundingClientRect();
-    targetX = Math.max(0, Math.min(event.clientX - rect.left, rect.width));
-    targetY = Math.max(0, Math.min(event.clientY - rect.top, rect.height));
+  const handleMove = (event) => {
+    updateTargetFromEvent(event);
     queueTick();
-  });
+  };
 
-  heroTitleWrap.addEventListener('pointerleave', () => {
+  const handleLeave = () => {
     heroTitleWrap.classList.remove('active');
     if (rafId) {
       cancelAnimationFrame(rafId);
       rafId = null;
     }
-  });
+  };
+
+  heroTitleWrap.addEventListener('pointerenter', handleEnter);
+  heroTitleWrap.addEventListener('pointermove', handleMove);
+  heroTitleWrap.addEventListener('pointerleave', handleLeave);
+  heroTitleWrap.addEventListener('mouseenter', handleEnter);
+  heroTitleWrap.addEventListener('mousemove', handleMove);
+  heroTitleWrap.addEventListener('mouseleave', handleLeave);
 }
 
 const yearNode = document.getElementById('year');
