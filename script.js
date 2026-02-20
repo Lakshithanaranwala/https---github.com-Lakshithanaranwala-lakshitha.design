@@ -1,3 +1,29 @@
+const themeToggle = document.querySelector('.theme-toggle');
+const root = document.documentElement;
+
+const applyTheme = (theme) => {
+  root.setAttribute('data-theme', theme);
+  if (themeToggle) {
+    const isDark = theme === 'dark';
+    themeToggle.textContent = isDark ? 'Light' : 'Dark';
+    themeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+    themeToggle.setAttribute('aria-pressed', String(isDark));
+  }
+};
+
+const savedTheme = localStorage.getItem('theme');
+const initialTheme =
+  savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+applyTheme(initialTheme);
+
+if (themeToggle) {
+  themeToggle.addEventListener('click', () => {
+    const nextTheme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    applyTheme(nextTheme);
+    localStorage.setItem('theme', nextTheme);
+  });
+}
+
 const menuBtn = document.querySelector('.menu-btn');
 const navLinks = document.querySelector('.nav-links');
 
