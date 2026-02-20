@@ -361,7 +361,7 @@ section {
   display: flex;
   align-items: center;
   gap: 0.85rem;
-  animation: logo-scroll 20s linear infinite;
+  animation: logo-scroll 10s linear infinite;
 }
 
 .logo-item {
