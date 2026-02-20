@@ -61,6 +61,24 @@ const observer = new IntersectionObserver(
 
 revealNodes.forEach((node) => observer.observe(node));
 
+const futureObjectShell = document.querySelector('.future-object-shell');
+if (futureObjectShell && !window.matchMedia('(hover: none), (pointer: coarse)').matches) {
+  futureObjectShell.addEventListener('pointermove', (event) => {
+    const rect = futureObjectShell.getBoundingClientRect();
+    const px = (event.clientX - rect.left) / rect.width;
+    const py = (event.clientY - rect.top) / rect.height;
+    const rotateY = (px - 0.5) * 36 + 22;
+    const rotateX = (0.5 - py) * 24 - 14;
+    futureObjectShell.style.setProperty('--ry', `${rotateY.toFixed(2)}deg`);
+    futureObjectShell.style.setProperty('--rx', `${rotateX.toFixed(2)}deg`);
+  });
+
+  futureObjectShell.addEventListener('pointerleave', () => {
+    futureObjectShell.style.setProperty('--ry', '22deg');
+    futureObjectShell.style.setProperty('--rx', '-14deg');
+  });
+}
+
 const yearNode = document.getElementById('year');
 if (yearNode) {
   yearNode.textContent = String(new Date().getFullYear());

@@ -260,6 +260,17 @@ section {
   padding-top: 4.5rem;
 }
 
+.hero-top {
+  display: grid;
+  grid-template-columns: 1.15fr minmax(220px, 360px);
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2.5rem);
+}
+
+.hero-heading-block h1 {
+  margin-bottom: 0.4rem;
+}
+
 .eyebrow {
   text-transform: uppercase;
   letter-spacing: 0.14em;
@@ -273,6 +284,138 @@ section {
   font-size: clamp(2rem, 4vw, 4rem);
   max-width: 14ch;
   margin-bottom: 1rem;
+}
+
+.hero-object-zone {
+  display: flex;
+  justify-content: center;
+  perspective: 1200px;
+}
+
+.future-object-shell {
+  --rx: -14deg;
+  --ry: 22deg;
+  width: clamp(220px, 26vw, 340px);
+  aspect-ratio: 1 / 1;
+  border-radius: 24px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform 0.28s ease, filter 0.3s ease;
+  background:
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--accent-2), transparent 76%), transparent 48%),
+    radial-gradient(circle at 70% 80%, color-mix(in srgb, var(--accent), transparent 80%), transparent 52%);
+}
+
+.future-object-shell:hover {
+  --rx: -8deg;
+  --ry: 30deg;
+  filter: drop-shadow(0 20px 34px color-mix(in srgb, var(--accent-2), transparent 70%));
+}
+
+.future-object {
+  width: 72%;
+  height: 72%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: object-spin 18s linear infinite;
+}
+
+.object-core {
+  position: absolute;
+  inset: 34% 34%;
+  border-radius: 50%;
+  transform: translateZ(36px);
+  background: radial-gradient(circle at 35% 35%, #fff, color-mix(in srgb, var(--accent-2), #fff 18%) 28%, var(--accent) 72%);
+  box-shadow:
+    0 0 26px color-mix(in srgb, var(--accent-2), transparent 58%),
+    0 0 58px color-mix(in srgb, var(--accent), transparent 78%);
+  animation: core-pulse 2.8s ease-in-out infinite;
+}
+
+.ring,
+.blade {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  transform-style: preserve-3d;
+}
+
+.ring {
+  border: 1.4px solid color-mix(in srgb, var(--text), transparent 68%);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--accent-2), transparent 85%);
+}
+
+.ring-a {
+  transform: rotateX(72deg) rotateY(8deg) translateZ(8px);
+}
+
+.ring-b {
+  transform: rotateY(72deg) rotateZ(16deg) translateZ(2px);
+}
+
+.ring-c {
+  transform: rotateX(16deg) rotateY(16deg) translateZ(14px) scale(0.84);
+  border-color: color-mix(in srgb, var(--accent), transparent 36%);
+}
+
+.blade {
+  width: 56%;
+  height: 12%;
+  inset: 44% 22%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent-2), transparent 28%), color-mix(in srgb, var(--accent), transparent 45%));
+  box-shadow: 0 0 14px color-mix(in srgb, var(--accent-2), transparent 72%);
+}
+
+.blade-a {
+  transform: rotate(0deg) translateZ(18px);
+}
+
+.blade-b {
+  transform: rotate(45deg) translateZ(28px) scaleX(0.8);
+}
+
+.blade-c {
+  transform: rotate(90deg) translateZ(8px);
+}
+
+.blade-d {
+  transform: rotate(135deg) translateZ(22px) scaleX(0.84);
+}
+
+.future-object-shell:hover .ring-a {
+  transform: rotateX(84deg) rotateY(20deg) translateZ(18px) scale(1.06);
+}
+
+.future-object-shell:hover .ring-b {
+  transform: rotateY(88deg) rotateZ(30deg) translateZ(-3px) scale(0.95);
+}
+
+.future-object-shell:hover .ring-c {
+  transform: rotateX(34deg) rotateY(38deg) translateZ(26px) scale(0.74);
+}
+
+.future-object-shell:hover .blade-a {
+  transform: rotate(12deg) translateZ(26px) scaleX(1.08);
+}
+
+.future-object-shell:hover .blade-b {
+  transform: rotate(78deg) translateZ(10px) scaleX(0.64);
+}
+
+.future-object-shell:hover .blade-c {
+  transform: rotate(128deg) translateZ(34px) scaleX(0.9);
+}
+
+.future-object-shell:hover .blade-d {
+  transform: rotate(200deg) translateZ(14px) scaleX(0.62);
+}
+
+.future-object-shell:hover .object-core {
+  transform: translateZ(48px) scale(1.12);
 }
 
 .hero-copy {
@@ -497,6 +640,29 @@ section {
   transform: translateY(0);
 }
 
+@keyframes object-spin {
+  from {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  to {
+    transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+  }
+}
+
+@keyframes core-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 26px color-mix(in srgb, var(--accent-2), transparent 58%),
+      0 0 58px color-mix(in srgb, var(--accent), transparent 78%);
+  }
+  50% {
+    box-shadow:
+      0 0 34px color-mix(in srgb, var(--accent-2), transparent 45%),
+      0 0 72px color-mix(in srgb, var(--accent), transparent 68%);
+  }
+}
+
 @keyframes logo-scroll {
   from {
     transform: translateX(0);
@@ -507,6 +673,14 @@ section {
 }
 
 @media (max-width: 1000px) {
+  .hero-top {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-object-zone {
+    order: 2;
+  }
+
   .study-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -519,6 +693,10 @@ section {
 @media (max-width: 760px) {
   section {
     padding: 4rem 0;
+  }
+
+  .future-object-shell {
+    width: min(78vw, 290px);
   }
 
   .menu-btn {
