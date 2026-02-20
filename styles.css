@@ -263,78 +263,10 @@ section {
   margin-bottom: 0.7rem;
 }
 
-.hero-title-wrap {
-  position: relative;
-  display: inline-block;
-  --mx: 50%;
-  --my: 50%;
-  --lens-size: 126px;
-}
-
-.hero-title-main,
-.hero-title-zoom {
+.hero h1 {
   font-size: clamp(2rem, 4vw, 4rem);
   max-width: 14ch;
   margin-bottom: 1rem;
-}
-
-.hero-title-main {
-  position: relative;
-  z-index: 1;
-}
-
-.hero-title-zoom {
-  display: block;
-  position: absolute;
-  inset: 0;
-  margin: 0;
-  color: var(--text);
-  pointer-events: none;
-  transform: scale(1.26);
-  transform-origin: var(--mx) var(--my);
-  clip-path: circle(var(--lens-size) at var(--mx) var(--my));
-  -webkit-clip-path: circle(var(--lens-size) at var(--mx) var(--my));
-  -webkit-mask-image: radial-gradient(circle var(--lens-size) at var(--mx) var(--my), #000 98%, transparent 100%);
-  mask-image: radial-gradient(circle var(--lens-size) at var(--mx) var(--my), #000 98%, transparent 100%);
-  opacity: 0;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  z-index: 2;
-  text-shadow:
-    0 0 1px color-mix(in srgb, var(--text), transparent 30%),
-    0 0 14px color-mix(in srgb, var(--accent-2), transparent 84%);
-  filter: saturate(1.08) contrast(1.04);
-}
-
-.hero-title-wrap.active .hero-title-zoom {
-  opacity: 1;
-  transform: scale(1.28);
-}
-
-.hero-title-wrap::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 3;
-  opacity: 0;
-  clip-path: circle(var(--lens-size) at var(--mx) var(--my));
-  -webkit-clip-path: circle(var(--lens-size) at var(--mx) var(--my));
-  -webkit-mask-image: radial-gradient(circle var(--lens-size) at var(--mx) var(--my), #000 98%, transparent 100%);
-  mask-image: radial-gradient(circle var(--lens-size) at var(--mx) var(--my), #000 98%, transparent 100%);
-  background:
-    radial-gradient(circle at var(--mx) var(--my), rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.03) 60%, transparent 72%),
-    radial-gradient(circle at calc(var(--mx) - 14px) calc(var(--my) - 16px), rgba(255, 255, 255, 0.38), transparent 32%);
-  transition: opacity 0.2s ease;
-}
-
-:root[data-theme='dark'] .hero-title-wrap::after {
-  background:
-    radial-gradient(circle at var(--mx) var(--my), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.02) 60%, transparent 72%),
-    radial-gradient(circle at calc(var(--mx) - 14px) calc(var(--my) - 16px), rgba(183, 215, 255, 0.22), transparent 32%);
-}
-
-.hero-title-wrap.active::after {
-  opacity: 1;
 }
 
 .hero-copy {
@@ -636,12 +568,5 @@ section {
   .cv-card {
     flex-direction: column;
     align-items: flex-start;
-  }
-}
-
-@media (hover: none), (pointer: coarse) {
-  .hero-title-zoom,
-  .hero-title-wrap::after {
-    display: none;
   }
 }

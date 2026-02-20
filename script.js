@@ -61,68 +61,6 @@ const observer = new IntersectionObserver(
 
 revealNodes.forEach((node) => observer.observe(node));
 
-const heroTitleWrap = document.querySelector('.hero-title-wrap');
-
-if (heroTitleWrap && !window.matchMedia('(hover: none), (pointer: coarse)').matches) {
-  let rafId = null;
-  let targetX = 0;
-  let targetY = 0;
-  let currentX = 0;
-  let currentY = 0;
-
-  const tick = () => {
-    currentX += (targetX - currentX) * 0.2;
-    currentY += (targetY - currentY) * 0.2;
-
-    heroTitleWrap.style.setProperty('--mx', `${currentX}px`);
-    heroTitleWrap.style.setProperty('--my', `${currentY}px`);
-
-    if (Math.abs(targetX - currentX) > 0.08 || Math.abs(targetY - currentY) > 0.08) {
-      rafId = requestAnimationFrame(tick);
-    } else {
-      rafId = null;
-    }
-  };
-
-  const queueTick = () => {
-    if (!rafId) rafId = requestAnimationFrame(tick);
-  };
-
-  const updateTargetFromEvent = (event) => {
-    const rect = heroTitleWrap.getBoundingClientRect();
-    targetX = Math.max(0, Math.min(event.clientX - rect.left, rect.width));
-    targetY = Math.max(0, Math.min(event.clientY - rect.top, rect.height));
-  };
-
-  const handleEnter = (event) => {
-    updateTargetFromEvent(event);
-    currentX = targetX;
-    currentY = targetY;
-    heroTitleWrap.classList.add('active');
-    queueTick();
-  };
-
-  const handleMove = (event) => {
-    updateTargetFromEvent(event);
-    queueTick();
-  };
-
-  const handleLeave = () => {
-    heroTitleWrap.classList.remove('active');
-    if (rafId) {
-      cancelAnimationFrame(rafId);
-      rafId = null;
-    }
-  };
-
-  heroTitleWrap.addEventListener('pointerenter', handleEnter);
-  heroTitleWrap.addEventListener('pointermove', handleMove);
-  heroTitleWrap.addEventListener('pointerleave', handleLeave);
-  heroTitleWrap.addEventListener('mouseenter', handleEnter);
-  heroTitleWrap.addEventListener('mousemove', handleMove);
-  heroTitleWrap.addEventListener('mouseleave', handleLeave);
-}
-
 const yearNode = document.getElementById('year');
 if (yearNode) {
   yearNode.textContent = String(new Date().getFullYear());
