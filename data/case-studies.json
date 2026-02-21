@@ -1,0 +1,97 @@
+{
+  "caseData": {
+    "analytics": {
+      "title": "Information Architecture for Analytics Platform",
+      "badge": "Information Architecture for Analytics Platform",
+      "heroImage": "https://raw.githubusercontent.com/Lakshithanaranwala/https---github.com-Lakshithanaranwala-lakshitha.design/main/assets/case%20study%20images/aishot-1351-jpg.jpg",
+      "overview": {
+        "text": "Add a short overview paragraph for this case study.",
+        "role": "Product Designer",
+        "tools": "Figma",
+        "duration": "TBD"
+      },
+      "problem": "Add problem statement from admin.",
+      "process": {
+        "discover": {
+          "text": "Add discover insights from admin.",
+          "images": [
+            "assets/case-discover.svg",
+            "assets/case-discover.svg"
+          ]
+        },
+        "define": {
+          "text": "Add define insights from admin.",
+          "image": "assets/case-define.svg"
+        },
+        "design": {
+          "items": [
+            {
+              "image": "assets/case-ui.svg",
+              "text": "Design screen 1 description."
+            },
+            {
+              "image": "assets/case-ui.svg",
+              "text": "Design screen 2 description."
+            },
+            {
+              "image": "assets/case-ui.svg",
+              "text": "Design screen 3 description."
+            },
+            {
+              "image": "assets/case-ui.svg",
+              "text": "Design screen 4 description."
+            },
+            {
+              "image": "assets/case-ui.svg",
+              "text": "Design screen 5 description."
+            },
+            {
+              "image": "assets/case-ui.svg",
+              "text": "Design screen 6 description."
+            }
+          ]
+        },
+        "deliver": {
+          "text": "Add deliver details from admin."
+        }
+      },
+      "solution": {
+        "text": "Add solution highlight from admin.",
+        "images": [
+          "assets/case-solution.svg",
+          "assets/case-solution.svg"
+        ]
+      }
+    }
+  },
+  "caseList": [
+    {
+      "id": "onboarding",
+      "label": "Onboarding Redesign",
+      "path": "case-study-onboarding.html",
+      "archived": false,
+      "locked": false
+    },
+    {
+      "id": "analytics",
+      "label": "Information Architecture for Analytics Platform",
+      "path": "case-study-analytics.html",
+      "archived": false,
+      "locked": false
+    },
+    {
+      "id": "healthcare",
+      "label": "Healthcare Patient Journey",
+      "path": "case-study-healthcare.html",
+      "archived": false,
+      "locked": false
+    },
+    {
+      "id": "skyone",
+      "label": "Sky one: All in one",
+      "path": "case-study-skyone.html",
+      "archived": false,
+      "locked": false
+    }
+  ]
+}
