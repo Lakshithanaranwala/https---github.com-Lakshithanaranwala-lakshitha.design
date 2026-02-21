@@ -78,6 +78,8 @@ const CASE_STORAGE_KEY = 'caseStudyContentV1';
 const CASE_LIST_KEY = 'caseStudyListV1';
 const CASE_LOCK_PASSWORD = 'LakshithaCS';
 const CASE_DATA_ENDPOINT = '/api/case-data';
+const DESIGN_STORAGE_KEY = 'designWorkDataV1';
+const DESIGN_DATA_ENDPOINT = '/api/design-data';
 
 const BASE_CASES = [
   {
@@ -159,6 +161,84 @@ const loadRemoteCaseData = async () => {
   } catch {
     return false;
   }
+};
+
+const getStoredDesignData = () => {
+  try {
+    const raw = localStorage.getItem(DESIGN_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : { items: [] };
+  } catch {
+    return { items: [] };
+  }
+};
+
+const loadRemoteDesignData = async () => {
+  try {
+    const response = await fetch(DESIGN_DATA_ENDPOINT, { method: 'GET' });
+    if (!response.ok) return false;
+    const payload = await response.json();
+    if (payload?.items) {
+      localStorage.setItem(DESIGN_STORAGE_KEY, JSON.stringify(payload));
+    }
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+const initDesignCarousel = () => {
+  const track = document.getElementById('designTrack');
+  if (!track) return;
+  const prevBtn = document.getElementById('designPrev');
+  const nextBtn = document.getElementById('designNext');
+  const emptyNode = document.getElementById('designEmpty');
+
+  const data = getStoredDesignData();
+  const items = data.items || [];
+  if (!items.length) {
+    if (emptyNode) emptyNode.classList.remove('hidden');
+    if (prevBtn) prevBtn.disabled = true;
+    if (nextBtn) nextBtn.disabled = true;
+    return;
+  }
+
+  if (emptyNode) emptyNode.classList.add('hidden');
+  track.innerHTML = items
+    .map((item, idx) => {
+      const label = item.label || `Design ${idx + 1}`;
+      return `<figure class="design-card" data-index="${idx}"><img src="${item.src}" alt="${label}" /></figure>`;
+    })
+    .join('');
+
+  let active = 0;
+  const cards = Array.from(track.querySelectorAll('.design-card'));
+  const update = () => {
+    cards.forEach((card, idx) => {
+      const offset = idx - active;
+      const abs = Math.abs(offset);
+      const translateX = offset * 260;
+      const translateZ = Math.max(0, 180 - abs * 60);
+      const rotateY = offset * -16;
+      const scale = 1 - abs * 0.08;
+      const opacity = abs > 3 ? 0 : 1 - abs * 0.18;
+      card.style.transform = `translate(-50%, -50%) translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
+      card.style.opacity = opacity;
+      card.style.zIndex = String(100 - abs);
+    });
+  };
+
+  const next = () => {
+    active = (active + 1) % cards.length;
+    update();
+  };
+  const prev = () => {
+    active = (active - 1 + cards.length) % cards.length;
+    update();
+  };
+
+  if (nextBtn) nextBtn.addEventListener('click', next);
+  if (prevBtn) prevBtn.addEventListener('click', prev);
+  update();
 };
 
 const getAllCases = ({ includeArchived = false } = {}) => {
@@ -394,9 +474,11 @@ const applyCaseStudyContent = () => {
 
 const initCaseDataAndRender = async () => {
   await loadRemoteCaseData();
+  await loadRemoteDesignData();
   applyCaseStudyContent();
   initCaseLockGate();
   initStudyCarousel();
+  initDesignCarousel();
 };
 
 initCaseDataAndRender();

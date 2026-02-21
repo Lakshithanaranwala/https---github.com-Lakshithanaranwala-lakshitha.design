@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Design Work Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .admin-wrap { width: min(1120px, 94vw); margin: 0 auto; padding: 2rem 0 3rem; }
+      .admin-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1rem; box-shadow: var(--shadow); }
+      .admin-form label { display: block; font-weight: 700; margin: 0.6rem 0 0.25rem; }
+      .admin-form input[type='text'] { width: 100%; border: 1px solid var(--border); border-radius: 10px; padding: 0.6rem 0.7rem; background: var(--bg); color: var(--text); font: inherit; }
+      .img-row { display: grid; grid-template-columns: 1fr auto auto; gap: 0.5rem; align-items: center; }
+      .img-preview { margin-top: 0.4rem; width: 100%; max-height: 220px; object-fit: contain; border: 1px solid var(--border); border-radius: 10px; background: var(--bg); }
+      .design-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.9rem; margin-top: 1rem; }
+      .design-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 0.6rem; }
+      .design-card img { width: 100%; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); }
+      .admin-actions { display: flex; gap: 0.6rem; margin-top: 1rem; }
+      .admin-note { color: var(--muted); font-size: 0.9rem; }
+      .hidden { display: none !important; }
+    </style>
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <header class="site-header">
+      <nav class="nav container">
+        <a class="brand" href="index.html">Lakshitha N.</a>
+        <button id="designLogoutBtn" class="btn ghost" type="button">Logout</button>
+      </nav>
+    </header>
+
+    <main class="admin-wrap">
+      <section class="admin-card">
+        <p class="eyebrow">Admin</p>
+        <h1 style="margin-bottom:0.5rem;">Design Work</h1>
+        <p class="admin-note">Upload and manage design showcase images. Files are stored in GitHub under the design work folder.</p>
+
+        <form id="designUploadForm" class="admin-form" style="margin-top:1rem;">
+          <label for="designTitle">Optional Label</label>
+          <input id="designTitle" type="text" placeholder="e.g. Dashboard concept" />
+          <label>Upload Image</label>
+          <div class="img-row">
+            <input id="designImageUrl" type="text" placeholder="Image URL (optional)" />
+            <input id="designImageFile" type="file" accept="image/*" />
+            <button class="btn ghost" id="designClearBtn" type="button">Clear</button>
+          </div>
+          <img id="designPreview" class="img-preview" alt="Design preview" />
+
+          <div class="admin-actions">
+            <button class="btn primary" type="submit">Add Image</button>
+            <button class="btn ghost" type="button" id="designBackBtn">Back to Admin</button>
+          </div>
+          <p id="designStatus" class="admin-note" style="min-height:1rem;margin-top:0.5rem;"></p>
+        </form>
+      </section>
+
+      <section class="admin-card" style="margin-top:1rem;">
+        <p class="eyebrow">Library</p>
+        <h2 style="margin-bottom:0.5rem;">Current Design Works</h2>
+        <div id="designGrid" class="design-grid"></div>
+      </section>
+    </main>
+
+    <script src="design-admin.js"></script>
+  </body>
+</html>

@@ -32,7 +32,10 @@ To upload images from the CMS into your GitHub repo `assets/` folder, deploy on 
 - `GITHUB_BRANCH` (optional, default `main`)
 - `GITHUB_ASSETS_DIR` (optional, default `assets/case study images`)
 - `GITHUB_DATA_PATH` (optional, default `data/case-studies.json`)
+- `GITHUB_DESIGN_ASSETS_DIR` (optional, default `assets/design work`)
+- `GITHUB_DESIGN_PATH` (optional, default `data/design-work.json`)
 
 The CMS calls `/api/upload` and stores the returned GitHub URL. If the API is not configured, it falls back to storing a data URL locally.
 
 Case study data is also synced to GitHub via `/api/case-data` so it works across devices.
+Design work data is synced to GitHub via `/api/design-data`.

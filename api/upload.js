@@ -26,7 +26,8 @@ module.exports = async (req, res) => {
   const owner = process.env.GITHUB_OWNER;
   const repo = process.env.GITHUB_REPO;
   const branch = process.env.GITHUB_BRANCH || 'main';
-  const assetsDir = process.env.GITHUB_ASSETS_DIR || DEFAULT_ASSETS_DIR;
+  const designAssetsDir = process.env.GITHUB_DESIGN_ASSETS_DIR || 'assets/design work';
+  let assetsDir = process.env.GITHUB_ASSETS_DIR || DEFAULT_ASSETS_DIR;
 
   if (!token || !owner || !repo) {
     res.status(500).json({ error: 'Missing GitHub configuration.' });
@@ -45,7 +46,10 @@ module.exports = async (req, res) => {
     return;
   }
 
-  const { dataUrl, filename } = payload || {};
+  const { dataUrl, filename, target } = payload || {};
+  if (target === 'design') {
+    assetsDir = designAssetsDir;
+  }
   const parsed = parseDataUrl(dataUrl);
   if (!parsed) {
     res.status(400).json({ error: 'Invalid data URL.' });

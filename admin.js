@@ -53,6 +53,9 @@ const $$ = (sel) => Array.from(document.querySelectorAll(sel));
 const clone = (obj) => JSON.parse(JSON.stringify(obj));
 
 const loginView = $('#loginView');
+const adminChoice = $('#adminChoice');
+const choiceCaseStudies = $('#choiceCaseStudies');
+const choiceDesignWork = $('#choiceDesignWork');
 const adminApp = $('#adminApp');
 const loginForm = $('#adminLoginForm');
 const loginError = $('#adminLoginError');
@@ -519,15 +522,14 @@ const createCaseStudy = (title) => {
 
 const unlockApp = async () => {
   loginView.classList.add('hidden');
-  adminApp.classList.remove('hidden');
+  if (adminChoice) adminChoice.classList.remove('hidden');
   adminLogoutBtn.classList.remove('hidden');
-  await loadCaseDataRemote();
-  renderCaseList();
 };
 
 const logoutApp = () => {
   sessionStorage.removeItem(ADMIN_AUTH_KEY);
   adminApp.classList.add('hidden');
+  if (adminChoice) adminChoice.classList.add('hidden');
   loginView.classList.remove('hidden');
   adminLogoutBtn.classList.add('hidden');
   $('#adminPassword').value = '';
@@ -605,6 +607,21 @@ resetCaseBtn.addEventListener('click', () => {
 });
 
 if (adminLogoutBtn) adminLogoutBtn.addEventListener('click', logoutApp);
+
+if (choiceCaseStudies) {
+  choiceCaseStudies.addEventListener('click', async () => {
+    if (adminChoice) adminChoice.classList.add('hidden');
+    adminApp.classList.remove('hidden');
+    await loadCaseDataRemote();
+    renderCaseList();
+  });
+}
+
+if (choiceDesignWork) {
+  choiceDesignWork.addEventListener('click', () => {
+    window.location.href = 'design-admin.html';
+  });
+}
 
 if (archiveCaseBtn) {
   archiveCaseBtn.addEventListener('click', () => {

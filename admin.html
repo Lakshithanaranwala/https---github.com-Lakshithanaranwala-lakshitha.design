@@ -45,7 +45,7 @@
     </header>
 
     <main class="admin-wrap">
-        <section id="loginView" class="admin-card" style="max-width:520px;margin:0 auto;">
+      <section id="loginView" class="admin-card" style="max-width:520px;margin:0 auto;">
         <p class="eyebrow">Admin</p>
         <h1 style="margin-bottom:0.4rem;">Admin Login</h1>
         <p class="admin-note">Enter password to manage case study pages.</p>
@@ -57,6 +57,16 @@
           </div>
           <p id="adminLoginError" style="color:#ff9f8a;min-height:1rem;margin-top:0.55rem;"></p>
         </form>
+      </section>
+
+      <section id="adminChoice" class="admin-card hidden" style="max-width:640px;margin:0 auto;">
+        <p class="eyebrow">Admin</p>
+        <h1 style="margin-bottom:0.6rem;">What do you want to manage?</h1>
+        <p class="admin-note">Choose the workspace you want to edit.</p>
+        <div style="display:flex;gap:0.7rem;flex-wrap:wrap;margin-top:0.8rem;">
+          <button id="choiceCaseStudies" class="btn primary" type="button">Case Studies</button>
+          <button id="choiceDesignWork" class="btn ghost" type="button">Design Work</button>
+        </div>
       </section>
 
       <section id="adminApp" class="admin-grid hidden">
