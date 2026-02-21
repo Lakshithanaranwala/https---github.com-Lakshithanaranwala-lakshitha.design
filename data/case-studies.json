@@ -1,7 +1,7 @@
 {
   "caseData": {
     "analytics": {
-      "title": "Information Architecture for Analytics Platform",
+      "title": "Test Environment case study",
       "badge": "Information Architecture for Analytics Platform",
       "heroImage": "https://raw.githubusercontent.com/Lakshithanaranwala/https---github.com-Lakshithanaranwala-lakshitha.design/main/assets/case%20study%20images/aishot-1351-jpg.jpg",
       "overview": {
@@ -74,7 +74,7 @@
     },
     {
       "id": "analytics",
-      "label": "Information Architecture for Analytics Platform",
+      "label": "Test Environment case study",
       "path": "case-study-analytics.html",
       "archived": false,
       "locked": false
