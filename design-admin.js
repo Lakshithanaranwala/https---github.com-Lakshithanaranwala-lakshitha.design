@@ -75,7 +75,7 @@ const uploadImageToGitHub = async (file, dataUrl) => {
       const err = payload?.error || `Upload failed (${response.status}).`;
       return { url: null, error: err, details: payload?.details };
     }
-    return { url: payload?.url || null, error: null };
+    return { url: payload?.url || null, path: payload?.path || '', error: null };
   } catch (err) {
     return { url: null, error: err?.message || 'Upload failed.' };
   }
@@ -112,6 +112,23 @@ const loadDesignDataRemote = async () => {
   }
 };
 
+const deleteAssetFromGitHub = async (path) => {
+  try {
+    const response = await fetch('/api/delete-asset', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ path }),
+    });
+    if (!response.ok) {
+      const details = await response.json().catch(() => ({}));
+      return { ok: false, error: details?.error || 'Delete failed.' };
+    }
+    return { ok: true };
+  } catch (err) {
+    return { ok: false, error: err?.message || 'Delete failed.' };
+  }
+};
+
 const renderDesignGrid = () => {
   const data = getLocalDesignData();
   const items = data.items || [];
@@ -135,12 +152,21 @@ const renderDesignGrid = () => {
     btn.addEventListener('click', async () => {
       const idx = Number(btn.dataset.index);
       const data = getLocalDesignData();
-      data.items.splice(idx, 1);
+      const [removed] = data.items.splice(idx, 1);
       setLocalDesignData(data);
       renderDesignGrid();
+      if (removed?.path) {
+        const del = await deleteAssetFromGitHub(removed.path);
+        if (designStatus) {
+          designStatus.textContent = del.ok ? 'Image deleted from GitHub.' : `Delete failed. ${del.error}`;
+        }
+      }
       const result = await saveDesignDataRemote(data);
       if (designStatus) {
-        designStatus.textContent = result.ok ? 'Removed and synced.' : `Removed locally. ${result.error}`;
+        const suffix = result.ok ? 'Removed and synced.' : `Removed locally. ${result.error}`;
+        designStatus.textContent = designStatus.textContent
+          ? `${designStatus.textContent} ${suffix}`
+          : suffix;
       }
     });
   });
@@ -150,6 +176,7 @@ const resetPreview = () => {
   designImageUrl.value = '';
   designImageFile.value = '';
   designPreview.removeAttribute('src');
+  designImageUrl.dataset.path = '';
 };
 
 if (designImageUrl) {
@@ -190,6 +217,9 @@ if (designUploadForm) {
       const result = await uploadImageToGitHub(file, dataUrl);
       if (result?.url) {
         src = result.url;
+        if (result?.path) {
+          designImageUrl.dataset.path = result.path;
+        }
       } else {
         src = dataUrl;
         if (designStatus) {
@@ -205,10 +235,12 @@ if (designUploadForm) {
 
     const data = getLocalDesignData();
     data.items = data.items || [];
-    data.items.unshift({ src, label });
+    const path = designImageUrl.dataset.path || '';
+    data.items.unshift({ src, label, path });
     setLocalDesignData(data);
     renderDesignGrid();
     resetPreview();
+    designImageUrl.dataset.path = '';
     designTitle.value = '';
     if (designStatus) designStatus.textContent = 'Saved locally. Syncing...';
     const syncResult = await saveDesignDataRemote(data);
