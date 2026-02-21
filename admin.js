@@ -65,6 +65,7 @@ const editorCaseTitle = $('#editorCaseTitle');
 const openCaseLink = $('#openCaseLink');
 const editorForm = $('#editorForm');
 const saveMessage = $('#saveMessage');
+const uploadStatus = $('#uploadStatus');
 const resetCaseBtn = $('#resetCaseBtn');
 const archiveCaseBtn = $('#archiveCaseBtn');
 const lockCaseBtn = $('#lockCaseBtn');
@@ -194,12 +195,15 @@ const uploadImageToGitHub = async (file, dataUrl) => {
         dataUrl,
       }),
     });
-    if (!response.ok) return null;
-    const payload = await response.json();
-    if (payload?.url) return payload.url;
-    return null;
+    const payload = await response.json().catch(() => null);
+    if (!response.ok) {
+      const err = payload?.error || `Upload failed (${response.status}).`;
+      return { url: null, error: err };
+    }
+    if (payload?.url) return { url: payload.url, error: null };
+    return { url: null, error: 'Upload failed.' };
   } catch {
-    return null;
+    return { url: null, error: 'Upload failed.' };
   }
 };
 
@@ -316,13 +320,20 @@ const setupUploadControls = () => {
     fileInput.addEventListener('change', async (event) => {
       const file = event.target.files?.[0];
       if (!file) return;
+      if (uploadStatus) uploadStatus.textContent = 'Uploading image...';
       const targetId = fileInput.id.replace('upload_', 'field_');
       const targetInput = document.getElementById(targetId);
       if (!targetInput) return;
       const dataUrl = await compressImageFile(file);
       let uploadedUrl = null;
       if (window.location.origin) {
-        uploadedUrl = await uploadImageToGitHub(file, dataUrl);
+        const result = await uploadImageToGitHub(file, dataUrl);
+        uploadedUrl = result?.url || null;
+        if (uploadStatus) {
+          uploadStatus.textContent = result?.error
+            ? `Upload failed. ${result.error} Using local image.`
+            : 'Upload complete.';
+        }
       }
       const value = uploadedUrl || dataUrl;
       targetInput.value = value;

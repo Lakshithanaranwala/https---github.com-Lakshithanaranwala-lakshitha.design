@@ -82,7 +82,12 @@ module.exports = async (req, res) => {
         return;
       }
 
-      lastError = await response.json();
+      try {
+        lastError = await response.json();
+      } catch {
+        const text = await response.text();
+        lastError = { error: text || 'Upload failed.' };
+      }
       if (response.status === 422) {
         continue;
       }
