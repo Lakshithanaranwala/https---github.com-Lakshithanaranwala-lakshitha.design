@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -134,48 +134,14 @@
             <p class="eyebrow">Selected Work</p>
             <h2>Case Studies</h2>
           </div>
-          <div class="study-grid">
-            <article class="study-card reveal">
-              <span class="tag">Fintech Mobile App</span>
-              <h3>Onboarding Redesign for Better Activation</h3>
-              <p>
-                Simplified account setup with progressive disclosure, resulting in faster first-time value.
-              </p>
-              <ul>
-                <li>Role: Lead UI/UX Designer</li>
-                <li>Timeline: 8 weeks</li>
-                <li>Impact: +31% onboarding completion</li>
-              </ul>
-              <a href="#" aria-label="Read full case study for onboarding redesign">Read Full Case Study</a>
-            </article>
-
-            <article class="study-card reveal">
-              <span class="tag">SaaS Dashboard</span>
-              <h3>Information Architecture for Analytics Platform</h3>
-              <p>
-                Reworked dashboard hierarchy and filters to reduce cognitive load for power users.
-              </p>
-              <ul>
-                <li>Role: Product Designer</li>
-                <li>Timeline: 10 weeks</li>
-                <li>Impact: -42% support tickets on navigation</li>
-              </ul>
-              <a href="#" aria-label="Read full case study for analytics dashboard">Read Full Case Study</a>
-            </article>
-
-            <article class="study-card reveal">
-              <span class="tag">Healthcare Web Portal</span>
-              <h3>Accessibility-First Patient Journey</h3>
-              <p>
-                Improved readability, contrast, and flow to help patients complete appointments with confidence.
-              </p>
-              <ul>
-                <li>Role: UI/UX Designer</li>
-                <li>Timeline: 6 weeks</li>
-                <li>Impact: +19% booking completion rate</li>
-              </ul>
-              <a href="#" aria-label="Read full case study for healthcare portal">Read Full Case Study</a>
-            </article>
+          <div class="study-carousel reveal" id="studyCarousel" aria-label="Case studies carousel">
+            <div class="study-window">
+              <div class="study-track" id="studyTrack"></div>
+            </div>
+            <div class="carousel-controls">
+              <button class="btn ghost carousel-btn" id="studyPrev" type="button" aria-label="Previous case studies">←</button>
+              <button class="btn ghost carousel-btn" id="studyNext" type="button" aria-label="Next case studies">→</button>
+            </div>
           </div>
         </div>
       </section>
@@ -239,7 +205,7 @@
 
     <footer class="site-footer">
       <div class="container">
-        <p>© <span id="year"></span> Lakshitha Naranwala. All rights reserved.</p>
+        <p>© <span id="year"></span> Lakshitha Naranwala. All rights reserved. <a href="admin.html">Admin</a></p>
       </div>
     </footer>
 

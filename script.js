@@ -15,8 +15,7 @@ const applyTheme = (theme) => {
 };
 
 const savedTheme = localStorage.getItem('theme');
-const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-applyTheme(savedTheme || (systemPrefersDark ? 'dark' : 'light'));
+applyTheme(savedTheme || 'dark');
 
 if (themeToggle) {
   themeToggle.addEventListener('click', () => {
@@ -28,6 +27,7 @@ if (themeToggle) {
 
 const menuBtn = document.querySelector('.menu-btn');
 const navLinks = document.querySelector('.nav-links');
+const siteHeader = document.querySelector('.site-header');
 
 if (menuBtn && navLinks) {
   menuBtn.addEventListener('click', () => {
@@ -41,6 +41,14 @@ if (menuBtn && navLinks) {
       menuBtn.setAttribute('aria-expanded', 'false');
     });
   });
+}
+
+if (siteHeader) {
+  const handleIslandState = () => {
+    siteHeader.classList.toggle('island-scrolled', window.scrollY > 14);
+  };
+  handleIslandState();
+  window.addEventListener('scroll', handleIslandState, { passive: true });
 }
 
 const revealNodes = document.querySelectorAll('.reveal');
@@ -64,4 +72,360 @@ revealNodes.forEach((node) => observer.observe(node));
 const yearNode = document.getElementById('year');
 if (yearNode) {
   yearNode.textContent = String(new Date().getFullYear());
+}
+
+const CASE_STORAGE_KEY = 'caseStudyContentV1';
+const CASE_LIST_KEY = 'caseStudyListV1';
+const CASE_LOCK_PASSWORD = 'LakshithaCS';
+
+const BASE_CASES = [
+  {
+    id: 'onboarding',
+    label: 'Onboarding Redesign',
+    path: 'case-study-onboarding.html',
+    tag: 'Fintech Mobile App',
+    title: 'Onboarding Redesign for Better Activation',
+    summary: 'Simplified account setup with progressive disclosure, resulting in faster first-time value.',
+    role: 'Lead UI/UX Designer',
+    tools: 'Figma, FigJam, Miro',
+    duration: '8 Weeks',
+  },
+  {
+    id: 'analytics',
+    label: 'Analytics Platform IA',
+    path: 'case-study-analytics.html',
+    tag: 'SaaS Dashboard',
+    title: 'Information Architecture for Analytics Platform',
+    summary: 'Reworked navigation hierarchy and filters to reduce cognitive load for power users.',
+    role: 'Product Designer',
+    tools: 'Figma, Miro, GA',
+    duration: '10 Weeks',
+  },
+  {
+    id: 'healthcare',
+    label: 'Healthcare Patient Journey',
+    path: 'case-study-healthcare.html',
+    tag: 'Healthcare Web Portal',
+    title: 'Accessibility-First Patient Journey',
+    summary: 'Improved readability, contrast, and flow to help patients complete appointments with confidence.',
+    role: 'UI/UX Designer',
+    tools: 'Figma, WCAG Checks',
+    duration: '6 Weeks',
+  },
+  {
+    id: 'skyone',
+    label: 'Sky one: All in one',
+    path: 'case-study-skyone.html',
+    tag: 'Sky one: All in one',
+    title: 'Unified Product Experience Case Study',
+    summary: 'Consolidated key workflows into one cohesive interface to reduce context switching and improve task flow.',
+    role: 'Product Designer',
+    tools: 'Figma, FigJam, Miro',
+    duration: 'TBD',
+  },
+];
+
+const getStoredCaseData = () => {
+  try {
+    const raw = localStorage.getItem(CASE_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+};
+
+const getStoredCaseList = () => {
+  try {
+    const raw = localStorage.getItem(CASE_LIST_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+};
+
+const getAllCases = ({ includeArchived = false } = {}) => {
+  const baseMap = new Map(BASE_CASES.map((item) => [item.id, item]));
+  const storedList = getStoredCaseList();
+  storedList.forEach((item) => {
+    if (!item || !item.id) return;
+    if (!baseMap.has(item.id)) {
+      baseMap.set(item.id, {
+        id: item.id,
+        label: item.label || 'Case Study',
+        path: item.path || `case-study-custom.html?case=${encodeURIComponent(item.id)}`,
+        tag: item.label || 'Case Study',
+        title: item.label || 'Case Study',
+        summary: 'Open the full case study for details.',
+        role: 'Product Designer',
+        tools: 'Figma',
+        duration: 'TBD',
+        archived: !!item.archived,
+      });
+    } else {
+      const existing = baseMap.get(item.id);
+      baseMap.set(item.id, {
+        ...existing,
+        ...item,
+        path: item.path || existing.path,
+      });
+    }
+  });
+  const cases = Array.from(baseMap.values());
+  return includeArchived ? cases : cases.filter((item) => !item.archived);
+};
+
+const initStudyCarousel = () => {
+  const carousel = document.getElementById('studyCarousel');
+  const track = document.getElementById('studyTrack');
+  const prevBtn = document.getElementById('studyPrev');
+  const nextBtn = document.getElementById('studyNext');
+  if (!carousel || !track || !prevBtn || !nextBtn) return;
+
+  const storedData = getStoredCaseData();
+  const cases = getAllCases();
+
+  track.innerHTML = cases
+    .map((item) => {
+      const data = storedData[item.id] || {};
+      const title = data.title || item.title || item.label;
+      const summary = data.problem || item.summary;
+      const role = data.overview?.role || item.role || 'Product Designer';
+      const tools = data.overview?.tools || item.tools || 'Figma';
+      const duration = data.overview?.duration || item.duration || 'TBD';
+      const tag = data.badge || item.tag || item.label || 'Case Study';
+      const href = item.path || `case-study-custom.html?case=${encodeURIComponent(item.id)}`;
+      const lockIcon = item.locked
+        ? '<span class="tag-lock" aria-label="Locked case study" title="Locked">🔒</span>'
+        : '';
+
+      return `
+        <article class="study-card">
+          <span class="tag">${tag}${lockIcon}</span>
+          <h3>${title}</h3>
+          <p>${summary}</p>
+          <ul>
+            <li>Role: ${role}</li>
+            <li>Tools: ${tools}</li>
+            <li>Duration: ${duration}</li>
+          </ul>
+          <a href="${href}" aria-label="Read full case study for ${title}">Read Full Case Study</a>
+        </article>
+      `;
+    })
+    .join('');
+
+  let index = 0;
+  let perView = 3;
+  let maxIndex = 0;
+
+  const getPerView = () => {
+    if (window.innerWidth <= 760) return 1;
+    if (window.innerWidth <= 1000) return 2;
+    return 3;
+  };
+
+  const update = () => {
+    const cards = track.querySelectorAll('.study-card');
+    perView = getPerView();
+    maxIndex = Math.max(0, cards.length - perView);
+    if (index > maxIndex) index = maxIndex;
+    const lead = cards[0];
+    const step = lead ? lead.getBoundingClientRect().width + 16 : 0;
+    track.style.transform = `translateX(${-index * step}px)`;
+    prevBtn.disabled = index <= 0;
+    nextBtn.disabled = index >= maxIndex;
+  };
+
+  prevBtn.addEventListener('click', () => {
+    index = Math.max(0, index - 1);
+    update();
+  });
+
+  nextBtn.addEventListener('click', () => {
+    index = Math.min(maxIndex, index + 1);
+    update();
+  });
+
+  window.addEventListener('resize', update);
+  update();
+};
+
+const setText = (selector, value, scope = document) => {
+  const node = scope.querySelector(selector);
+  if (node && typeof value === 'string') node.textContent = value;
+};
+
+const setHTML = (selector, value, scope = document) => {
+  const node = scope.querySelector(selector);
+  if (node && typeof value === 'string') node.innerHTML = value;
+};
+
+const initCaseLockGate = () => {
+  const caseLayoutNode = document.querySelector('.case-layout');
+  const qsCaseId = new URLSearchParams(window.location.search).get('case');
+  const caseId = document.body.dataset.caseId || qsCaseId;
+  if (!caseLayoutNode || !caseId) return;
+
+  const caseEntry = getAllCases({ includeArchived: true }).find((item) => item.id === caseId);
+  if (!caseEntry?.locked) return;
+
+  const unlockKey = `caseStudyUnlocked:${caseId}`;
+  if (sessionStorage.getItem(unlockKey) === 'true') return;
+
+  const main = document.querySelector('main');
+  const footer = document.querySelector('footer');
+  if (main) main.style.display = 'none';
+  if (footer) footer.style.display = 'none';
+
+  const gate = document.createElement('section');
+  gate.className = 'case-password-gate';
+  gate.innerHTML = `
+    <form class="case-password-card">
+      <p class="eyebrow">Protected Case Study</p>
+      <h1>Enter Password</h1>
+      <p>This case study is locked. Enter password to continue.</p>
+      <div class="case-password-row">
+        <input type="password" id="caseLockInput" placeholder="Password" required />
+        <button class="btn primary" type="submit">Open</button>
+      </div>
+      <p class="case-password-error" id="caseLockError"></p>
+    </form>
+  `;
+  document.body.appendChild(gate);
+
+  const form = gate.querySelector('form');
+  const input = gate.querySelector('#caseLockInput');
+  const errorNode = gate.querySelector('#caseLockError');
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (input.value === CASE_LOCK_PASSWORD) {
+      sessionStorage.setItem(unlockKey, 'true');
+      if (main) main.style.display = '';
+      if (footer) footer.style.display = '';
+      gate.remove();
+      return;
+    }
+    errorNode.textContent = 'Incorrect password. Try again.';
+    input.value = '';
+    input.focus();
+  });
+};
+
+const setImage = (imgNode, src) => {
+  if (!imgNode) return;
+  const figure = imgNode.closest('figure');
+  if (src) {
+    imgNode.src = src;
+    if (figure) figure.style.display = '';
+  } else {
+    imgNode.removeAttribute('src');
+    if (figure) figure.style.display = 'none';
+  }
+};
+
+const applyCaseStudyContent = () => {
+  const caseLayoutNode = document.querySelector('.case-layout');
+  const qsCaseId = new URLSearchParams(window.location.search).get('case');
+  const caseId = document.body.dataset.caseId || qsCaseId;
+  if (!caseLayoutNode || !caseId) return;
+
+  const allCases = getStoredCaseData();
+  const data = allCases[caseId];
+  if (!data) return;
+
+  setText('.cs-hero-copy h1', data.title);
+  setHTML('.cs-overview-text', data.overview?.text);
+  setText('.cs-overview-grid article:nth-child(1) p', data.overview?.role);
+  setText('.cs-overview-grid article:nth-child(2) p', data.overview?.tools);
+  setText('.cs-overview-grid article:nth-child(3) p', data.overview?.duration);
+  setHTML('.cs-problem p', data.problem);
+
+  const heroImage = document.querySelector('.cs-hero-media img');
+  setImage(heroImage, data.heroImage);
+
+  const subsections = document.querySelectorAll('.cs-subsection');
+  if (subsections.length >= 4) {
+    const discoverImages = subsections[0].querySelectorAll('.cs-two-col img');
+    setImage(discoverImages[0], data.process?.discover?.images?.[0]);
+    setImage(discoverImages[1], data.process?.discover?.images?.[1]);
+    setHTML('p', data.process?.discover?.text, subsections[0]);
+
+    const defineImage = subsections[1].querySelector('.cs-single-image img');
+    setImage(defineImage, data.process?.define?.image);
+    setHTML('p', data.process?.define?.text, subsections[1]);
+
+    const designItems = subsections[2].querySelectorAll('.cs-ui-grid figure');
+    designItems.forEach((figure, index) => {
+      const item = data.process?.design?.items?.[index];
+      if (!item) return;
+      const img = figure.querySelector('img');
+      const caption = figure.querySelector('figcaption');
+      setImage(img, item.image);
+      if (caption && typeof item.text === 'string') caption.innerHTML = item.text;
+    });
+
+    setHTML('p', data.process?.deliver?.text, subsections[3]);
+  }
+
+  const solutionImages = document.querySelectorAll('.cs-section:last-of-type .cs-two-col img');
+  setImage(solutionImages[0], data.solution?.images?.[0]);
+  setImage(solutionImages[1], data.solution?.images?.[1]);
+  setHTML('.cs-highlight', data.solution?.text);
+};
+
+applyCaseStudyContent();
+initCaseLockGate();
+initStudyCarousel();
+
+const caseLayout = document.querySelector('.case-layout');
+if (caseLayout) {
+  const zoomableImages = caseLayout.querySelectorAll(
+    '.cs-two-col img, .cs-single-image img, .cs-ui-grid img, .cs-hero-media img'
+  );
+
+  if (zoomableImages.length) {
+    const lightbox = document.createElement('div');
+    lightbox.className = 'image-lightbox';
+    lightbox.setAttribute('aria-hidden', 'true');
+    lightbox.innerHTML = `
+      <div class="image-lightbox-backdrop"></div>
+      <div class="image-lightbox-content">
+        <button class="lightbox-close" aria-label="Close image view">&times;</button>
+        <img alt="" />
+      </div>
+    `;
+    document.body.appendChild(lightbox);
+
+    const lightboxImage = lightbox.querySelector('img');
+    const closeBtn = lightbox.querySelector('.lightbox-close');
+    const backdrop = lightbox.querySelector('.image-lightbox-backdrop');
+
+    const closeLightbox = () => {
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightboxImage.removeAttribute('src');
+      document.body.style.overflow = '';
+    };
+
+    const openLightbox = (img) => {
+      lightboxImage.src = img.src;
+      lightboxImage.alt = img.alt || 'Expanded case study image';
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    };
+
+    zoomableImages.forEach((img) => {
+      img.addEventListener('click', () => openLightbox(img));
+    });
+
+    closeBtn.addEventListener('click', closeLightbox);
+    backdrop.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && lightbox.classList.contains('open')) {
+        closeLightbox();
+      }
+    });
+  }
 }

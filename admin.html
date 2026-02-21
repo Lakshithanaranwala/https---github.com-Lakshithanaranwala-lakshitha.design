@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Case Study Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .admin-wrap { width: min(1120px, 94vw); margin: 0 auto; padding: 2rem 0 3rem; }
+      .admin-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1rem; box-shadow: var(--shadow); }
+      .admin-grid { display: grid; grid-template-columns: 280px 1fr; gap: 1rem; }
+      .admin-list button { width: 100%; text-align: left; margin-bottom: 0.55rem; }
+      .admin-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.9rem; }
+      .tab-btn.active { background: linear-gradient(125deg, var(--accent), var(--accent-strong)); color: var(--solid-on-accent); border-color: transparent; }
+      .tab-panel { display: none; }
+      .tab-panel.active { display: block; }
+      .admin-form label { display: block; font-weight: 700; margin: 0.6rem 0 0.25rem; }
+      .admin-form input[type='text'] { width: 100%; border: 1px solid var(--border); border-radius: 10px; padding: 0.6rem 0.7rem; background: var(--bg); color: var(--text); font: inherit; }
+      .rte-toolbar { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0.4rem; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
+      .rte-btn { padding: 0.35rem 0.6rem; font-size: 0.85rem; }
+      .rte-color { width: 36px; height: 32px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); padding: 0; }
+      .rte-editor { width: 100%; min-height: 110px; border: 1px solid var(--border); border-radius: 10px; padding: 0.6rem 0.7rem; background: var(--bg); color: var(--text); font: inherit; }
+      .rte-editor:focus { outline: 2px solid color-mix(in srgb, var(--accent) 50%, transparent); }
+      .img-row { display: grid; grid-template-columns: 1fr auto auto; gap: 0.5rem; align-items: center; }
+      .img-preview { margin-top: 0.4rem; width: 100%; max-height: 180px; object-fit: contain; border: 1px solid var(--border); border-radius: 10px; background: var(--bg); }
+      .admin-actions { display: flex; gap: 0.6rem; margin-top: 1rem; }
+      .hidden { display: none !important; }
+      .admin-note { color: var(--muted); font-size: 0.9rem; }
+      @media (max-width: 900px) { .admin-grid { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <header class="site-header">
+      <nav class="nav container">
+        <a class="brand" href="index.html">Lakshitha N.</a>
+        <button id="adminLogoutBtn" class="btn ghost hidden" type="button">Logout</button>
+      </nav>
+    </header>
+
+    <main class="admin-wrap">
+      <section id="loginView" class="admin-card" style="max-width:520px;margin:0 auto;">
+        <p class="eyebrow">Admin</p>
+        <h1 style="margin-bottom:0.4rem;">Admin Login</h1>
+        <p class="admin-note">Enter password to manage case study pages.</p>
+        <form id="adminLoginForm" class="admin-form">
+          <label for="adminPassword">Password</label>
+          <div style="display:flex;gap:0.5rem;">
+            <input id="adminPassword" type="password" required />
+            <button class="btn primary" type="submit">Login</button>
+          </div>
+          <p id="adminLoginError" style="color:#ff9f8a;min-height:1rem;margin-top:0.55rem;"></p>
+        </form>
+      </section>
+
+      <section id="adminApp" class="admin-grid hidden">
+        <aside class="admin-card admin-list">
+          <p class="eyebrow">Case Studies</p>
+          <h2 style="margin-bottom:0.8rem;">Select Case Study</h2>
+          <form id="createCaseForm" class="admin-form" style="margin-bottom:0.8rem;">
+            <label for="newCaseTitle">Create New Case Study</label>
+            <div style="display:flex;gap:0.45rem;">
+              <input id="newCaseTitle" type="text" placeholder="Case title" required />
+              <button class="btn primary" type="submit">Create</button>
+            </div>
+            <p id="createCaseMsg" class="admin-note" style="min-height:1rem;margin-top:0.45rem;"></p>
+          </form>
+          <div id="caseList"></div>
+          <p class="admin-note">Click a case to open editor tabs.</p>
+        </aside>
+
+        <section class="admin-card">
+          <div id="editorEmpty">
+            <p class="eyebrow">Editor</p>
+            <h2>Select a case study to start editing.</h2>
+          </div>
+
+          <div id="editorView" class="hidden">
+            <p class="eyebrow">Editor</p>
+            <h2 id="editorCaseTitle">Case Study</h2>
+            <p class="admin-note"><a id="openCaseLink" href="#" target="_blank" rel="noopener">Open case page</a></p>
+
+            <div class="admin-tabs">
+              <button class="btn ghost tab-btn active" type="button" data-tab="title">Title</button>
+              <button class="btn ghost tab-btn" type="button" data-tab="overview">Overview</button>
+              <button class="btn ghost tab-btn" type="button" data-tab="problem">Problem Statement</button>
+              <button class="btn ghost tab-btn" type="button" data-tab="process">Process</button>
+              <button class="btn ghost tab-btn" type="button" data-tab="solution">Solution</button>
+            </div>
+
+            <form id="editorForm" class="admin-form">
+              <section class="tab-panel active" data-panel="title">
+                <label for="field_title">Title</label>
+                <input id="field_title" type="text" />
+                <label for="field_badge">Badge</label>
+                <input id="field_badge" type="text" placeholder="e.g. Fintech Mobile App" />
+                <label for="field_heroImage">Background Image</label>
+                <div class="img-row">
+                  <input id="field_heroImage" type="text" placeholder="Image URL or uploaded file result" />
+                  <input id="upload_heroImage" type="file" accept="image/*" />
+                  <button class="btn ghost delete-image" data-target="field_heroImage" type="button">Delete</button>
+                </div>
+                <img id="preview_heroImage" class="img-preview" alt="Hero image preview" />
+              </section>
+
+              <section class="tab-panel" data-panel="overview">
+                <label for="field_overviewText">Overview Paragraph</label>
+                <div class="rte-toolbar" data-target="field_overviewText">
+                  <button class="btn ghost rte-btn" type="button" data-cmd="bold">Bold</button>
+                  <button class="btn ghost rte-btn" type="button" data-cmd="italic">Italic</button>
+                  <input class="rte-color" type="color" title="Text color" data-cmd="foreColor" value="#ffffff" />
+                  <input class="rte-color" type="color" title="Highlight" data-cmd="hiliteColor" value="#fff3a3" />
+                  <button class="btn ghost rte-btn" type="button" data-cmd="insertUnorderedList">Bullets</button>
+                </div>
+                <div id="field_overviewText" class="rte-editor" contenteditable="true"></div>
+                <label for="field_role">Role</label>
+                <input id="field_role" type="text" />
+                <label for="field_tools">Tools</label>
+                <input id="field_tools" type="text" />
+                <label for="field_duration">Duration</label>
+                <input id="field_duration" type="text" />
+              </section>
+
+              <section class="tab-panel" data-panel="problem">
+                <label for="field_problem">Problem Statement</label>
+                <div class="rte-toolbar" data-target="field_problem">
+                  <button class="btn ghost rte-btn" type="button" data-cmd="bold">Bold</button>
+                  <button class="btn ghost rte-btn" type="button" data-cmd="italic">Italic</button>
+                  <input class="rte-color" type="color" title="Text color" data-cmd="foreColor" value="#ffffff" />
+                  <input class="rte-color" type="color" title="Highlight" data-cmd="hiliteColor" value="#fff3a3" />
+                  <button class="btn ghost rte-btn" type="button" data-cmd="insertUnorderedList">Bullets</button>
+                </div>
+                <div id="field_problem" class="rte-editor" contenteditable="true"></div>
+              </section>
+
+              <section class="tab-panel" data-panel="process">
+                <label for="field_discoverText">Discover Text</label>
+                <div class="rte-toolbar" data-target="field_discoverText">
+                  <button class="btn ghost rte-btn" type="button" data-cmd="bold">Bold</button>
+                  <button class="btn ghost rte-btn" type="button" data-cmd="italic">Italic</button>
+                  <input class="rte-color" type="color" title="Text color" data-cmd="foreColor" value="#ffffff" />
+                  <input class="rte-color" type="color" title="Highlight" data-cmd="hiliteColor" value="#fff3a3" />
+                  <button class="btn ghost rte-btn" type="button" data-cmd="insertUnorderedList">Bullets</button>
+                </div>
+                <div id="field_discoverText" class="rte-editor" contenteditable="true"></div>
+                <label>Discover Image 1</label>
+                <div class="img-row"><input id="field_discoverImage1" type="text" /><input id="upload_discoverImage1" type="file" accept="image/*" /><button class="btn ghost delete-image" data-target="field_discoverImage1" type="button">Delete</button></div>
+                <img id="preview_discoverImage1" class="img-preview" alt="Discover image 1 preview" />
+                <label>Discover Image 2</label>
+                <div class="img-row"><input id="field_discoverImage2" type="text" /><input id="upload_discoverImage2" type="file" accept="image/*" /><button class="btn ghost delete-image" data-target="field_discoverImage2" type="button">Delete</button></div>
+                <img id="preview_discoverImage2" class="img-preview" alt="Discover image 2 preview" />
+
+                <label for="field_defineText">Define Text</label>
+                <div class="rte-toolbar" data-target="field_defineText">
+                  <button class="btn ghost rte-btn" type="button" data-cmd="bold">Bold</button>
+                  <button class="btn ghost rte-btn" type="button" data-cmd="italic">Italic</button>
+                  <input class="rte-color" type="color" title="Text color" data-cmd="foreColor" value="#ffffff" />
+                  <input class="rte-color" type="color" title="Highlight" data-cmd="hiliteColor" value="#fff3a3" />
+                  <button class="btn ghost rte-btn" type="button" data-cmd="insertUnorderedList">Bullets</button>
+                </div>
+                <div id="field_defineText" class="rte-editor" contenteditable="true"></div>
+                <label>Define Image</label>
+                <div class="img-row"><input id="field_defineImage" type="text" /><input id="upload_defineImage" type="file" accept="image/*" /><button class="btn ghost delete-image" data-target="field_defineImage" type="button">Delete</button></div>
+                <img id="preview_defineImage" class="img-preview" alt="Define image preview" />
+
+                <label for="field_deliverText">Deliver Text</label>
+                <div class="rte-toolbar" data-target="field_deliverText">
+                  <button class="btn ghost rte-btn" type="button" data-cmd="bold">Bold</button>
+                  <button class="btn ghost rte-btn" type="button" data-cmd="italic">Italic</button>
+                  <input class="rte-color" type="color" title="Text color" data-cmd="foreColor" value="#ffffff" />
+                  <input class="rte-color" type="color" title="Highlight" data-cmd="hiliteColor" value="#fff3a3" />
+                  <button class="btn ghost rte-btn" type="button" data-cmd="insertUnorderedList">Bullets</button>
+                </div>
+                <div id="field_deliverText" class="rte-editor" contenteditable="true"></div>
+
+                <h3 style="margin-top:1rem;">Design Items (6)</h3>
+                <div id="designItemsEditor"></div>
+              </section>
+
+              <section class="tab-panel" data-panel="solution">
+                <label for="field_solutionText">Solution Highlight Text</label>
+                <div class="rte-toolbar" data-target="field_solutionText">
+                  <button class="btn ghost rte-btn" type="button" data-cmd="bold">Bold</button>
+                  <button class="btn ghost rte-btn" type="button" data-cmd="italic">Italic</button>
+                  <input class="rte-color" type="color" title="Text color" data-cmd="foreColor" value="#ffffff" />
+                  <input class="rte-color" type="color" title="Highlight" data-cmd="hiliteColor" value="#fff3a3" />
+                  <button class="btn ghost rte-btn" type="button" data-cmd="insertUnorderedList">Bullets</button>
+                </div>
+                <div id="field_solutionText" class="rte-editor" contenteditable="true"></div>
+                <label>Solution Image 1</label>
+                <div class="img-row"><input id="field_solutionImage1" type="text" /><input id="upload_solutionImage1" type="file" accept="image/*" /><button class="btn ghost delete-image" data-target="field_solutionImage1" type="button">Delete</button></div>
+                <img id="preview_solutionImage1" class="img-preview" alt="Solution image 1 preview" />
+                <label>Solution Image 2</label>
+                <div class="img-row"><input id="field_solutionImage2" type="text" /><input id="upload_solutionImage2" type="file" accept="image/*" /><button class="btn ghost delete-image" data-target="field_solutionImage2" type="button">Delete</button></div>
+                <img id="preview_solutionImage2" class="img-preview" alt="Solution image 2 preview" />
+              </section>
+
+              <div class="admin-actions">
+                <button class="btn primary" type="submit">Save Changes</button>
+                <button class="btn ghost" type="button" id="resetCaseBtn">Reset to Defaults</button>
+                <button class="btn ghost" type="button" id="archiveCaseBtn">Archive</button>
+                <button class="btn ghost" type="button" id="lockCaseBtn">Lock</button>
+              </div>
+              <p id="saveMessage" class="admin-note" style="margin-top:0.5rem;"></p>
+            </form>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="admin.js"></script>
+  </body>
+</html>
