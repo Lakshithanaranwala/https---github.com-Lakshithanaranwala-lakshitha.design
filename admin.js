@@ -184,6 +184,25 @@ const compressImageFile = async (file) => {
   });
 };
 
+const uploadImageToGitHub = async (file, dataUrl) => {
+  try {
+    const response = await fetch('/api/upload', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        filename: file?.name || 'case-image',
+        dataUrl,
+      }),
+    });
+    if (!response.ok) return null;
+    const payload = await response.json();
+    if (payload?.url) return payload.url;
+    return null;
+  } catch {
+    return null;
+  }
+};
+
 const buildDesignEditors = () => {
   designItemsEditor.innerHTML = Array.from({ length: 6 }, (_, idx) => {
     const i = idx + 1;
@@ -301,8 +320,13 @@ const setupUploadControls = () => {
       const targetInput = document.getElementById(targetId);
       if (!targetInput) return;
       const dataUrl = await compressImageFile(file);
-      targetInput.value = dataUrl;
-      setInputValue(targetId, dataUrl);
+      let uploadedUrl = null;
+      if (window.location.origin) {
+        uploadedUrl = await uploadImageToGitHub(file, dataUrl);
+      }
+      const value = uploadedUrl || dataUrl;
+      targetInput.value = value;
+      setInputValue(targetId, value);
       event.target.value = '';
     });
   });
