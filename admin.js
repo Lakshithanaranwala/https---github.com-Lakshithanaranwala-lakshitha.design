@@ -330,9 +330,12 @@ const setupUploadControls = () => {
         const result = await uploadImageToGitHub(file, dataUrl);
         uploadedUrl = result?.url || null;
         if (uploadStatus) {
-          uploadStatus.textContent = result?.error
-            ? `Upload failed. ${result.error} Using local image.`
-            : 'Upload complete.';
+          if (result?.error) {
+            const details = result?.details ? ` Details: ${JSON.stringify(result.details)}` : '';
+            uploadStatus.textContent = `Upload failed. ${result.error}${details} Using local image.`;
+          } else {
+            uploadStatus.textContent = 'Upload complete.';
+          }
         }
       }
       const value = uploadedUrl || dataUrl;

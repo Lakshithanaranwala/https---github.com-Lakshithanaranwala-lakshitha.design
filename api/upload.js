@@ -40,6 +40,11 @@ module.exports = async (req, res) => {
     payload = null;
   }
 
+  if (!payload) {
+    res.status(400).json({ error: 'Invalid request body.' });
+    return;
+  }
+
   const { dataUrl, filename } = payload || {};
   const parsed = parseDataUrl(dataUrl);
   if (!parsed) {
@@ -88,6 +93,11 @@ module.exports = async (req, res) => {
         const text = await response.text();
         lastError = { error: text || 'Upload failed.' };
       }
+      lastError = {
+        status: response.status,
+        statusText: response.statusText,
+        details: lastError,
+      };
       if (response.status === 422) {
         continue;
       }
