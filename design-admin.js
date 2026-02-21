@@ -139,7 +139,7 @@ const renderDesignGrid = () => {
   designGrid.innerHTML = items
     .map(
       (item, index) => `
-        <div class="design-card">
+        <div class="design-admin-card">
           <img src="${item.src}" alt="${item.label || 'Design work'}" />
           <p class="admin-note" style="margin-top:0.4rem;">${item.label || 'Design work'}</p>
           <button class="btn ghost" type="button" data-index="${index}">Remove</button>
