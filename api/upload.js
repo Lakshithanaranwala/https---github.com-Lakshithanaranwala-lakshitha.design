@@ -57,8 +57,10 @@ module.exports = async (req, res) => {
   const attemptNames = [`${baseName}.${ext}`, `${baseName}-${Math.random().toString(36).slice(2, 7)}.${ext}`];
 
   let lastError = null;
+  let lastPath = '';
   for (const name of attemptNames) {
     const path = `${assetsDir}/${name}`.replace(/\/+/g, '/');
+    lastPath = path;
     try {
       const safePath = path
         .split('/')
@@ -97,6 +99,7 @@ module.exports = async (req, res) => {
         status: response.status,
         statusText: response.statusText,
         details: lastError,
+        context: { owner, repo, branch, path },
       };
       if (response.status === 422) {
         continue;
@@ -108,5 +111,5 @@ module.exports = async (req, res) => {
     }
   }
 
-  res.status(500).json({ error: 'Upload failed.', details: lastError });
+  res.status(500).json({ error: 'Upload failed.', details: lastError, context: { owner, repo, branch, path: lastPath } });
 };
