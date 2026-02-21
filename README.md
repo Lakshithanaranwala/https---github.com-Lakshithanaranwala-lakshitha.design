@@ -30,6 +30,6 @@ To upload images from the CMS into your GitHub repo `assets/` folder, deploy on 
 - `GITHUB_OWNER` (repo owner)
 - `GITHUB_REPO` (repo name)
 - `GITHUB_BRANCH` (optional, default `main`)
-- `GITHUB_ASSETS_DIR` (optional, default `assets/case-study-images`)
+- `GITHUB_ASSETS_DIR` (optional, default `assets/case study images`)
 
 The CMS calls `/api/upload` and stores the returned GitHub URL. If the API is not configured, it falls back to storing a data URL locally.

@@ -1,4 +1,4 @@
-const DEFAULT_ASSETS_DIR = 'assets/case-study-images';
+const DEFAULT_ASSETS_DIR = 'assets/case study images';
 
 const parseDataUrl = (dataUrl) => {
   if (!dataUrl || typeof dataUrl !== 'string') return null;
@@ -55,7 +55,11 @@ module.exports = async (req, res) => {
   for (const name of attemptNames) {
     const path = `${assetsDir}/${name}`.replace(/\/+/g, '/');
     try {
-      const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${encodeURIComponent(path)}`, {
+      const safePath = path
+        .split('/')
+        .map((segment) => encodeURIComponent(segment))
+        .join('/');
+      const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${safePath}`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,
