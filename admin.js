@@ -2,6 +2,7 @@ const ADMIN_PASSWORD = 'Lakshitha123@';
 const CASE_STORAGE_KEY = 'caseStudyContentV1';
 const CASE_LIST_KEY = 'caseStudyListV1';
 const ADMIN_AUTH_KEY = 'caseStudyAdminUnlocked';
+const CASE_DATA_ENDPOINT = '/api/case-data';
 
 const BASE_CASES = [
   { id: 'onboarding', label: 'Onboarding Redesign', path: 'case-study-onboarding.html', archived: false, locked: false },
@@ -91,6 +92,46 @@ const setStore = (data) => {
   }
 };
 
+const setCaseList = (list) => localStorage.setItem(CASE_LIST_KEY, JSON.stringify(list));
+
+const saveCaseDataRemote = async () => {
+  try {
+    const payload = {
+      caseData: getStore(),
+      caseList: getCaseList(),
+    };
+    const response = await fetch(CASE_DATA_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!response.ok) {
+      const details = await response.json().catch(() => ({}));
+      return { ok: false, error: details?.error || 'Remote save failed.', details };
+    }
+    return { ok: true };
+  } catch (err) {
+    return { ok: false, error: 'Remote save failed.', details: err?.message || '' };
+  }
+};
+
+const loadCaseDataRemote = async () => {
+  try {
+    const response = await fetch(CASE_DATA_ENDPOINT, { method: 'GET' });
+    if (!response.ok) return { ok: false };
+    const payload = await response.json();
+    if (payload?.caseData && typeof payload.caseData === 'object') {
+      setStore(payload.caseData);
+    }
+    if (Array.isArray(payload?.caseList)) {
+      setCaseList(payload.caseList);
+    }
+    return { ok: true };
+  } catch {
+    return { ok: false };
+  }
+};
+
 const getCaseList = () => {
   try {
     const stored = JSON.parse(localStorage.getItem(CASE_LIST_KEY) || 'null');
@@ -108,8 +149,6 @@ const getCaseList = () => {
     return clone(BASE_CASES);
   }
 };
-
-const setCaseList = (list) => localStorage.setItem(CASE_LIST_KEY, JSON.stringify(list));
 
 const getCaseById = (id) => getCaseList().find((c) => c.id === id) || null;
 const getCasePath = (caseObj) => caseObj.path || `case-study-custom.html?case=${encodeURIComponent(caseObj.id)}`;
@@ -478,10 +517,11 @@ const createCaseStudy = (title) => {
   openCaseEditor(id);
 };
 
-const unlockApp = () => {
+const unlockApp = async () => {
   loginView.classList.add('hidden');
   adminApp.classList.remove('hidden');
   adminLogoutBtn.classList.remove('hidden');
+  await loadCaseDataRemote();
   renderCaseList();
 };
 
@@ -525,7 +565,7 @@ createCaseForm.addEventListener('submit', (event) => {
   newCaseTitle.value = '';
 });
 
-editorForm.addEventListener('submit', (event) => {
+editorForm.addEventListener('submit', async (event) => {
   event.preventDefault();
   if (!currentCaseId) return;
 
@@ -549,7 +589,10 @@ editorForm.addEventListener('submit', (event) => {
     }
   }
 
-  saveMessage.textContent = 'Saved. Refresh/open the case page to view updates.';
+  const remoteResult = await saveCaseDataRemote();
+  saveMessage.textContent = remoteResult.ok
+    ? 'Saved. Case data synced to GitHub.'
+    : `Saved locally. Remote sync failed. ${remoteResult.error}`;
 });
 
 resetCaseBtn.addEventListener('click', () => {

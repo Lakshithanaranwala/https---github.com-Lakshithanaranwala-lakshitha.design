@@ -77,6 +77,7 @@ if (yearNode) {
 const CASE_STORAGE_KEY = 'caseStudyContentV1';
 const CASE_LIST_KEY = 'caseStudyListV1';
 const CASE_LOCK_PASSWORD = 'LakshithaCS';
+const CASE_DATA_ENDPOINT = '/api/case-data';
 
 const BASE_CASES = [
   {
@@ -140,6 +141,23 @@ const getStoredCaseList = () => {
     return raw ? JSON.parse(raw) : [];
   } catch {
     return [];
+  }
+};
+
+const loadRemoteCaseData = async () => {
+  try {
+    const response = await fetch(CASE_DATA_ENDPOINT, { method: 'GET' });
+    if (!response.ok) return false;
+    const payload = await response.json();
+    if (payload?.caseData && typeof payload.caseData === 'object') {
+      localStorage.setItem(CASE_STORAGE_KEY, JSON.stringify(payload.caseData));
+    }
+    if (Array.isArray(payload?.caseList)) {
+      localStorage.setItem(CASE_LIST_KEY, JSON.stringify(payload.caseList));
+    }
+    return true;
+  } catch {
+    return false;
   }
 };
 
@@ -374,9 +392,14 @@ const applyCaseStudyContent = () => {
   setHTML('.cs-highlight', data.solution?.text);
 };
 
-applyCaseStudyContent();
-initCaseLockGate();
-initStudyCarousel();
+const initCaseDataAndRender = async () => {
+  await loadRemoteCaseData();
+  applyCaseStudyContent();
+  initCaseLockGate();
+  initStudyCarousel();
+};
+
+initCaseDataAndRender();
 
 const caseLayout = document.querySelector('.case-layout');
 if (caseLayout) {
