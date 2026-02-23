@@ -46,30 +46,40 @@
 
     <main>
       <section class="hero container reveal">
-        <p class="eyebrow">UI/UX Designer</p>
-        <h1>
-          I design interfaces that reduce friction and make complex experiences feel clear.
-        </h1>
-        <p class="hero-copy">
-          Product-focused UI/UX portfolio featuring problem framing, UX decisions, and measurable outcomes.
-        </p>
-        <div class="hero-actions">
-          <a class="btn primary" href="#work">Explore Case Studies</a>
-          <a class="btn ghost" href="assets/LakshithaNaranwala.pdf" target="_blank" rel="noopener">View CV</a>
-        </div>
-        <div class="hero-stats">
-          <article>
-            <h3>20+</h3>
-            <p>Products Designed</p>
-          </article>
-          <article>
-            <h3>3</h3>
-            <p>End-to-End Case Studies</p>
-          </article>
-          <article>
-            <h3>24%</h3>
-            <p>Avg. Task Success Lift</p>
-          </article>
+        <div class="hero-layout">
+          <div class="hero-main">
+            <p class="eyebrow">UI/UX Designer</p>
+            <h1>
+              I design interfaces that reduce friction and make complex experiences feel clear.
+            </h1>
+            <p class="hero-copy">
+              Product-focused UI/UX portfolio featuring problem framing, UX decisions, and measurable outcomes.
+            </p>
+            <div class="hero-actions">
+              <a class="btn primary" href="#work">Explore Case Studies</a>
+              <a class="btn ghost" href="assets/LakshithaNaranwala.pdf" target="_blank" rel="noopener">View CV</a>
+            </div>
+            <div class="hero-stats">
+              <article>
+                <h3>20+</h3>
+                <p>Products Designed</p>
+              </article>
+              <article>
+                <h3>3</h3>
+                <p>End-to-End Case Studies</p>
+              </article>
+              <article>
+                <h3>24%</h3>
+                <p>Avg. Task Success Lift</p>
+              </article>
+            </div>
+          </div>
+          <aside class="hero-spline-side" aria-label="3D interactive Spline animation">
+            <spline-viewer
+              class="hero-spline"
+              url="https://prod.spline.design/DwSkJLmVl4JwE1gR/scene.splinecode"
+            ></spline-viewer>
+          </aside>
         </div>
       </section>
 
@@ -274,6 +284,7 @@
       </div>
     </footer>
 
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.59/build/spline-viewer.js"></script>
     <script src="script.js"></script>
   </body>
 </html>

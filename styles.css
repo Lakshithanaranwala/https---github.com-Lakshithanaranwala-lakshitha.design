@@ -306,7 +306,18 @@ section {
 }
 
 .hero {
-  padding-top: 4.5rem;
+  padding-top: 1.5rem;
+}
+
+.hero-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  align-items: center;
+  gap: clamp(1rem, 2.8vw, 2rem);
+}
+
+.hero-main {
+  min-width: 0;
 }
 
 .eyebrow {
@@ -389,6 +400,16 @@ section {
   margin: 0;
   font-size: 0.9rem;
   color: var(--muted);
+}
+
+.hero-spline-side {
+  min-height: 420px;
+}
+
+.hero-spline {
+  width: 800px;
+  height: 800px;
+  display: block;
 }
 
 .logo-loop {
@@ -1178,6 +1199,18 @@ section {
 }
 
 @media (max-width: 1000px) {
+  .hero-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-spline-side {
+    min-height: 340px;
+  }
+
+  .hero-spline {
+    height: 340px;
+  }
+
   .study-track .study-card {
     flex: 0 0 calc((100% - 1rem) / 2);
   }
