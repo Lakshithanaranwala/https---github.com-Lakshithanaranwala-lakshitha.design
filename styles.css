@@ -144,6 +144,10 @@ img {
   z-index: -1;
 }
 
+body:has(.case-layout) .grain {
+  display: none;
+}
+
 .site-header {
   position: sticky;
   top: 0;
@@ -533,11 +537,16 @@ section {
   position: absolute;
   top: 0;
   left: 0;
-  width: 62px;
+  width: 64px;
   height: 2px;
   border-radius: 999px;
-  background: linear-gradient(90deg, rgba(78, 210, 255, 0), rgba(126, 225, 255, 1), rgba(78, 210, 255, 0));
-  box-shadow: 0 0 16px rgba(85, 199, 255, 0.7);
+  background: linear-gradient(
+    90deg,
+    rgba(86, 214, 255, 0),
+    rgba(162, 234, 255, 1),
+    rgba(86, 214, 255, 0)
+  );
+  box-shadow: 0 0 16px rgba(86, 214, 255, 0.8), 0 0 28px rgba(86, 214, 255, 0.42);
   opacity: 0;
   pointer-events: none;
   z-index: 2;
@@ -564,50 +573,50 @@ section {
   0% {
     top: 0;
     left: 0;
-    width: 62px;
+    width: 64px;
     height: 2px;
   }
   24% {
     top: 0;
-    left: calc(100% - 62px);
-    width: 62px;
+    left: calc(100% - 64px);
+    width: 64px;
     height: 2px;
   }
   25% {
     top: 0;
     left: calc(100% - 2px);
     width: 2px;
-    height: 62px;
+    height: 64px;
   }
   49% {
-    top: calc(100% - 62px);
+    top: calc(100% - 64px);
     left: calc(100% - 2px);
     width: 2px;
-    height: 62px;
+    height: 64px;
   }
   50% {
     top: calc(100% - 2px);
-    left: calc(100% - 62px);
-    width: 62px;
+    left: calc(100% - 64px);
+    width: 64px;
     height: 2px;
   }
   74% {
     top: calc(100% - 2px);
     left: 0;
-    width: 62px;
+    width: 64px;
     height: 2px;
   }
   75% {
-    top: calc(100% - 62px);
+    top: calc(100% - 64px);
     left: 0;
     width: 2px;
-    height: 62px;
+    height: 64px;
   }
   100% {
     top: 0;
     left: 0;
     width: 2px;
-    height: 62px;
+    height: 64px;
   }
 }
 
@@ -862,11 +871,11 @@ section {
 
 .cs-hero-media {
   position: relative;
-  border: 1px solid var(--border);
-  border-radius: calc(var(--radius) + 4px);
+  
+  border-radius: calc(var(--radius) + 1px);
   overflow: hidden;
   min-height: clamp(260px, 42vw, 420px);
-  box-shadow: var(--shadow);
+  
 }
 
 .cs-hero-media img {
