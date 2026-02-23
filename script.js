@@ -86,6 +86,7 @@ const BASE_CASES = [
     id: 'onboarding',
     label: 'Onboarding Redesign',
     path: 'case-study-onboarding.html',
+    displayImage: 'assets/case-ui.svg',
     tag: 'Fintech Mobile App',
     title: 'Onboarding Redesign for Better Activation',
     summary: 'Simplified account setup with progressive disclosure, resulting in faster first-time value.',
@@ -97,6 +98,7 @@ const BASE_CASES = [
     id: 'analytics',
     label: 'Analytics Platform IA',
     path: 'case-study-analytics.html',
+    displayImage: 'assets/case-ui.svg',
     tag: 'SaaS Dashboard',
     title: 'Information Architecture for Analytics Platform',
     summary: 'Reworked navigation hierarchy and filters to reduce cognitive load for power users.',
@@ -108,6 +110,7 @@ const BASE_CASES = [
     id: 'healthcare',
     label: 'Healthcare Patient Journey',
     path: 'case-study-healthcare.html',
+    displayImage: 'assets/case-ui.svg',
     tag: 'Healthcare Web Portal',
     title: 'Accessibility-First Patient Journey',
     summary: 'Improved readability, contrast, and flow to help patients complete appointments with confidence.',
@@ -119,6 +122,7 @@ const BASE_CASES = [
     id: 'skyone',
     label: 'Sky one: All in one',
     path: 'case-study-skyone.html',
+    displayImage: 'assets/case-ui.svg',
     tag: 'Sky one: All in one',
     title: 'Unified Product Experience Case Study',
     summary: 'Consolidated key workflows into one cohesive interface to reduce context switching and improve task flow.',
@@ -251,6 +255,7 @@ const getAllCases = ({ includeArchived = false } = {}) => {
         id: item.id,
         label: item.label || 'Case Study',
         path: item.path || `case-study-custom.html?case=${encodeURIComponent(item.id)}`,
+        displayImage: 'assets/case-ui.svg',
         tag: item.label || 'Case Study',
         title: item.label || 'Case Study',
         summary: 'Open the full case study for details.',
@@ -286,27 +291,36 @@ const initStudyCarousel = () => {
     .map((item) => {
       const data = storedData[item.id] || {};
       const title = data.title || item.title || item.label;
-      const summary = data.problem || item.summary;
+      const summaryRaw = data.overview?.text || data.problem || item.summary || 'Open the full case study for details.';
+      const summary = summaryRaw.replace(/<[^>]*>/g, '').trim();
       const role = data.overview?.role || item.role || 'Product Designer';
       const tools = data.overview?.tools || item.tools || 'Figma';
       const duration = data.overview?.duration || item.duration || 'TBD';
       const tag = data.badge || item.tag || item.label || 'Case Study';
       const href = item.path || `case-study-custom.html?case=${encodeURIComponent(item.id)}`;
+      const displayImage = data.displayImage || data.heroImage || item.displayImage || 'assets/case-ui.svg';
       const lockIcon = item.locked
         ? '<span class="tag-lock" aria-label="Locked case study" title="Locked">🔒</span>'
         : '';
 
       return `
         <article class="study-card">
-          <span class="tag">${tag}${lockIcon}</span>
-          <h3>${title}</h3>
-          <p>${summary}</p>
-          <ul>
-            <li>Role: ${role}</li>
-            <li>Tools: ${tools}</li>
-            <li>Duration: ${duration}</li>
-          </ul>
-          <a href="${href}" aria-label="Read full case study for ${title}">Read Full Case Study</a>
+          <figure class="study-card-media">
+            <img src="${displayImage}" alt="${title} display image" loading="lazy" />
+          </figure>
+          <div class="study-card-content">
+            <span class="tag">${tag}${lockIcon}</span>
+            <h3>${title}</h3>
+            <p>${summary}</p>
+            <ul class="study-card-meta">
+              <li>Role: ${role}</li>
+              <li>Tools: ${tools}</li>
+              <li>Duration: ${duration}</li>
+            </ul>
+          </div>
+          <div class="study-card-footer">
+            <a href="${href}" aria-label="Read full case study for ${title}">Read Full Case Study</a>
+          </div>
         </article>
       `;
     })

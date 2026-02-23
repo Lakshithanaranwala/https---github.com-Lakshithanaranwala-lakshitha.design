@@ -23,6 +23,7 @@ const makeDefaultCaseData = (title = 'New Case Study') => ({
   title,
   badge: title,
   heroImage: DEFAULT_IMAGE.hero,
+  displayImage: DEFAULT_IMAGE.ui,
   overview: {
     text: 'Add a short overview paragraph for this case study.',
     role: 'Product Designer',
@@ -285,6 +286,7 @@ const loadCaseIntoForm = (caseId) => {
   setInputValue('field_title', data.title);
   setInputValue('field_badge', data.badge || caseObj?.tag || caseObj?.label || '');
   setInputValue('field_heroImage', data.heroImage);
+  setInputValue('field_displayImage', data.displayImage || data.heroImage || DEFAULT_IMAGE.ui);
   setInputValue('field_overviewText', data.overview.text);
   setInputValue('field_role', data.overview.role);
   setInputValue('field_tools', data.overview.tools);
@@ -313,6 +315,7 @@ const collectFormData = () => ({
   title: getFieldValue('field_title'),
   badge: getFieldValue('field_badge'),
   heroImage: getFieldValue('field_heroImage'),
+  displayImage: getFieldValue('field_displayImage'),
   overview: {
     text: getFieldValue('field_overviewText'),
     role: getFieldValue('field_role'),
