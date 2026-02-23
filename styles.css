@@ -1238,6 +1238,10 @@ section {
     padding: 4rem 0;
   }
 
+  .hero-spline-side {
+    display: none;
+  }
+
   .menu-btn {
     display: inline-flex;
   }
