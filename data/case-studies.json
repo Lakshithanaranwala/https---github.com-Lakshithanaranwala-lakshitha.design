@@ -74,7 +74,7 @@
         "tools": "FIGJAM, FIGMA, ILLUSTRATOR, FRAMER,  GOOGLE MEET, GOOGLE FORMS,  GOOGLE DOC, Miro",
         "duration": "3 Months"
       },
-      "problem": "<p>Outdated CRM causes major<b><font color=\"#d31212\"> inefficiency</font></b>, <b><font color=\"#fc0303\">security risks</font></b>, and <b><font color=\"#d73737\">missed deadline</font><font color=\"#b04545\">s</font></b><font color=\"#ff0000\">.</font></p>",
+      "problem": "<p>\"Outdated CRM causes major<b><font color=\"#d31212\"> inefficiency</font></b>, <b><font color=\"#fc0303\">security risks</font></b>, and <b><font color=\"#d73737\">missed deadline</font><font color=\"#b04545\">s</font></b><font color=\"#ff0000\">.</font><font color=\"#4c3d3d\">\"</font></p>",
       "process": {
         "discover": {
           "text": "Add discover insights from admin.",
