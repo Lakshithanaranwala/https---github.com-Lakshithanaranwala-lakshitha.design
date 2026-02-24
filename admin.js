@@ -35,6 +35,7 @@ const makeDefaultCaseData = (title = 'New Case Study') => ({
     discover: { images: [DEFAULT_IMAGE.discover, DEFAULT_IMAGE.discover], text: 'Add discover insights from admin.' },
     define: { image: DEFAULT_IMAGE.define, text: 'Add define insights from admin.' },
     design: {
+      intro: 'This section highlights key interface explorations and final UI decisions that shaped the experience.',
       items: Array.from({ length: 6 }, (_, i) => ({ image: DEFAULT_IMAGE.ui, text: `Design screen ${i + 1} description.` })),
     },
     deliver: { text: 'Add deliver details from admin.' },
@@ -299,6 +300,7 @@ const loadCaseIntoForm = (caseId) => {
   setInputValue('field_defineText', data.process.define.text);
   setInputValue('field_defineImage', data.process.define.image);
   setInputValue('field_deliverText', data.process.deliver.text);
+  setInputValue('field_designIntro', data.process.design.intro || '');
 
   data.process.design.items.forEach((item, idx) => {
     const i = idx + 1;
@@ -333,6 +335,7 @@ const collectFormData = () => ({
       image: getFieldValue('field_defineImage'),
     },
     design: {
+      intro: getFieldValue('field_designIntro'),
       items: Array.from({ length: 6 }, (_, idx) => {
         const i = idx + 1;
         return { image: getFieldValue(`field_designImage${i}`), text: getFieldValue(`field_designText${i}`) };

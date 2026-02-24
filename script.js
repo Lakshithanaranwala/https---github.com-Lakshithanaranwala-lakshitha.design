@@ -468,6 +468,7 @@ const applyCaseStudyContent = () => {
     setHTML('p', data.process?.define?.text, subsections[1]);
 
     const designItems = subsections[2].querySelectorAll('.cs-ui-grid figure');
+    setHTML('.cs-design-intro', data.process?.design?.intro, subsections[2]);
     designItems.forEach((figure, index) => {
       const item = data.process?.design?.items?.[index];
       if (!item) return;
