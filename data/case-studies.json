@@ -80,8 +80,8 @@
       },
       "problem": "<p>\"Outdated CRM causes major<b><font color=\"#d31212\"> inefficiency</font></b>, <b><font color=\"#fc0303\">security risks</font></b>, and <b><font color=\"#d73737\">missed deadline</font><font color=\"#b04545\">s</font></b><font color=\"#ff0000\">.</font><font color=\"#4c3d3d\">\"</font></p>",
       "goal": {
-        "title": "Transforming workflow through secure, tailored software",
-        "text": ""
+        "title": "Transforming workflow through secure, tailored software.",
+        "text": "<div><ul><li>Develop a secure, centralized system tailored to Lasenda's workflow.</li><li>Enable clear tracking of employee tasks, workloads and project progress.</li><li>Implement stronger data protection and encryption measures for financial information.</li><li>introduced automated, reliable client-deadline management to reduce missed submission.</li><li>Create a flexible develipment process that adapts to evolving stakeholder needs.</li></ul></div>"
       },
       "process": {
         "discover": {
