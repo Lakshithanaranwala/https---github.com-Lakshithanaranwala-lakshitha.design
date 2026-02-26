@@ -92,7 +92,7 @@
           ]
         },
         "define": {
-          "text": "Add define insights from admin.",
+          "text": "<b>Background</b><div><p data-start=\"349\" data-end=\"667\">Lasenda, an accounting services company, was experiencing operational inefficiencies due to limitations in their existing CRM system. After conducting stakeholder interviews (Super Admin, Admin, Supervisor, and Employees), I created a journey map to visualize the current workflow and uncover pain points across roles.</p>\n<p data-start=\"669\" data-end=\"845\">The journey map captures the end-to-end process from <strong data-start=\"722\" data-end=\"762\">client onboarding to task completion</strong>, highlighting breakdowns in task tracking, deadline management, and data security.</p></div>",
           "image": "https://raw.githubusercontent.com/Lakshithanaranwala/https---github.com-Lakshithanaranwala-lakshitha.design/main/assets/case%20study%20images/LSE-JM-png.jpg"
         },
         "design": {
