@@ -76,7 +76,7 @@
         "text": "Lasenda, an accounting service company, faced major operational inefficiencies due to limitations of their existing CRM, Hawksoft. The system lacked essential <b>task-tracking capabilities</b>, making it difficult to <b>monitor employee progress</b> and <b>manage workloads. </b>Weak data encryption posed <b>security concerns for sensitive financial information.</b> additionally, Hawksoft provided no reliable method for <b>handling client deadlines</b>, increasing the risk of delays and compliance issues.&nbsp;",
         "role": "UX + UI DESIGN",
         "tools": "FIGJAM, FIGMA",
-        "duration": "3 Months"
+        "duration": "3 Months | Agile"
       },
       "problem": "<p>\"Outdated CRM causes major<b><font color=\"#d31212\"> inefficiency</font></b>, <b><font color=\"#fc0303\">security risks</font></b>, and <b><font color=\"#d73737\">missed deadline</font><font color=\"#b04545\">s</font></b><font color=\"#ff0000\">.</font><font color=\"#4c3d3d\">\"</font></p>",
       "goal": {
