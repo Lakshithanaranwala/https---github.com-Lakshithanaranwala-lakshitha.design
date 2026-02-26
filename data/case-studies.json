@@ -100,7 +100,7 @@
           "items": [
             {
               "image": "https://raw.githubusercontent.com/Lakshithanaranwala/https---github.com-Lakshithanaranwala-lakshitha.design/main/assets/case%20study%20images/task-manager-png.jpg",
-              "text": "Design screen 1 description."
+              "text": "<strong data-start=\"216\" data-end=\"228\">Problem:</strong> Users don’t know what’s pending, what’s ongoing, or what’s completed.<div><b>Solution:</b></div><div><ul><li>Kanban Layout (Todo | In Progress | Completed<span style=\"font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit;\">)</span></li><li><span style=\"font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit;\">Clear Task count indicators</span></li><li><span style=\"font-family: inherit; font-size: inherit; font-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit;\">Visual status seperation using color coded sections</span></li></ul></div>"
             },
             {
               "image": "assets/case-ui.svg",
