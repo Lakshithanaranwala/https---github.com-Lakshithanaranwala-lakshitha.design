@@ -962,6 +962,8 @@ section {
 }
 
 .case-main {
+  --cs-paragraph-size: 16px;
+  --cs-problem-size: var(--cs-paragraph-size);
   padding: 4.5rem 0 3.5rem;
 }
 
@@ -1082,6 +1084,7 @@ section {
   color: var(--muted);
   max-width: 100% max-content;
   padding-bottom: 2rem;
+  font-size: var(--cs-paragraph-size);
 }
 
 .cs-overview-grid article {
@@ -1113,12 +1116,18 @@ section {
 .cs-problem p {
   margin: 0;
   max-width: 100% max-content;
-  font-size: clamp(2.6rem, 3vw, 2.4rem);
+  font-size: var(--cs-problem-size);
   font-weight: 700;
   line-height: 1.15;
   text-align: center;
   color: var(--text);
   padding-bottom: 2rem;
+}
+
+.cs-goal-text {
+  margin: 0.4rem 0 0;
+  color: var(--muted);
+  font-size: var(--cs-paragraph-size);
 }
 
 .cs-subsection {
@@ -1133,6 +1142,25 @@ section {
   color: var(--text);
 }
 
+.cs-subsection h3.process-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.process-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent-2) 18%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent-2) 45%, transparent);
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
 .cs-subsection .cs-two-col,
 .cs-subsection .cs-single-image,
 .cs-subsection .cs-ui-grid {
@@ -1142,11 +1170,13 @@ section {
 .cs-subsection p {
   color: var(--muted);
   margin: 3rem 0 0;
+  font-size: var(--cs-paragraph-size);
 }
 
 .cs-design-intro {
   margin: 0.7rem 0 1.1rem !important;
   color: var(--muted);
+  font-size: var(--cs-paragraph-size) !important;
 }
 
 .cs-section ul,
@@ -1192,7 +1222,7 @@ section {
 .cs-ui-grid figcaption {
   margin-top: 0.7rem;
   color: var(--muted);
-  font-size: 0.86rem;
+  font-size: var(--cs-paragraph-size);
 }
 
 .cs-highlight {
@@ -1203,6 +1233,7 @@ section {
   background: var(--frost-bg);
   color: var(--text);
   font-weight: 600;
+  font-size: var(--cs-paragraph-size);
 }
 
 .case-password-gate {

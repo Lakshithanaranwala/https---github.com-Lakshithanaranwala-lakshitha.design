@@ -446,12 +446,25 @@ const applyCaseStudyContent = () => {
   const data = allCases[caseId];
   if (!data) return;
 
+  const paragraphSize = Number(data.typography?.paragraphSize);
+  if (Number.isFinite(paragraphSize)) {
+    const safeSize = Math.min(36, Math.max(12, Math.round(paragraphSize)));
+    caseLayoutNode.style.setProperty('--cs-paragraph-size', `${safeSize}px`);
+  }
+  const problemParagraphSize = Number(data.typography?.problemParagraphSize);
+  if (Number.isFinite(problemParagraphSize)) {
+    const safeProblemSize = Math.min(48, Math.max(12, Math.round(problemParagraphSize)));
+    caseLayoutNode.style.setProperty('--cs-problem-size', `${safeProblemSize}px`);
+  }
+
   setText('.cs-hero-copy h1', data.title);
   setHTML('.cs-overview-text', data.overview?.text);
   setText('.cs-overview-grid article:nth-child(1) p', data.overview?.role);
   setText('.cs-overview-grid article:nth-child(2) p', data.overview?.tools);
   setText('.cs-overview-grid article:nth-child(3) p', data.overview?.duration);
   setHTML('.cs-problem p', data.problem);
+  setText('.cs-goal .section-head h2', data.goal?.title);
+  setHTML('.cs-goal-text', data.goal?.text);
 
   const heroImage = document.querySelector('.cs-hero-media img');
   setImage(heroImage, data.heroImage);

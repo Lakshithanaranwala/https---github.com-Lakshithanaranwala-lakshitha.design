@@ -21,7 +21,7 @@
       .tab-panel { display: none; }
       .tab-panel.active { display: block; }
       .admin-form label { display: block; font-weight: 700; margin: 0.6rem 0 0.25rem; }
-      .admin-form input[type='text'] { width: 100%; border: 1px solid var(--border); border-radius: 10px; padding: 0.6rem 0.7rem; background: var(--bg); color: var(--text); font: inherit; }
+      .admin-form input[type='text'], .admin-form input[type='number'] { width: 100%; border: 1px solid var(--border); border-radius: 10px; padding: 0.6rem 0.7rem; background: var(--bg); color: var(--text); font: inherit; }
       .rte-toolbar { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0.4rem; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
       .rte-btn { padding: 0.35rem 0.6rem; font-size: 0.85rem; }
       .rte-color { width: 36px; height: 32px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); padding: 0; }
@@ -102,6 +102,7 @@
               <button class="btn ghost tab-btn active" type="button" data-tab="title">Title</button>
               <button class="btn ghost tab-btn" type="button" data-tab="overview">Overview</button>
               <button class="btn ghost tab-btn" type="button" data-tab="problem">Problem Statement</button>
+              <button class="btn ghost tab-btn" type="button" data-tab="goal">Goal</button>
               <button class="btn ghost tab-btn" type="button" data-tab="process">Process</button>
               <button class="btn ghost tab-btn" type="button" data-tab="solution">Solution</button>
             </div>
@@ -112,6 +113,8 @@
                 <input id="field_title" type="text" />
                 <label for="field_badge">Badge</label>
                 <input id="field_badge" type="text" placeholder="e.g. Fintech Mobile App" />
+                <label for="field_paragraphSize">Paragraph Font Size (px)</label>
+                <input id="field_paragraphSize" type="number" min="12" max="36" step="1" />
                 <label for="field_heroImage">Background Image</label>
                 <div class="img-row">
                   <input id="field_heroImage" type="text" placeholder="Image URL or uploaded file result" />
@@ -148,6 +151,8 @@
 
               <section class="tab-panel" data-panel="problem">
                 <label for="field_problem">Problem Statement</label>
+                <label for="field_problemParagraphSize">Problem Statement Font Size (px)</label>
+                <input id="field_problemParagraphSize" type="number" min="12" max="48" step="1" />
                 <div class="rte-toolbar" data-target="field_problem">
                   <button class="btn ghost rte-btn" type="button" data-cmd="bold">Bold</button>
                   <button class="btn ghost rte-btn" type="button" data-cmd="italic">Italic</button>
@@ -156,6 +161,20 @@
                   <button class="btn ghost rte-btn" type="button" data-cmd="insertUnorderedList">Bullets</button>
                 </div>
                 <div id="field_problem" class="rte-editor" contenteditable="true"></div>
+              </section>
+
+              <section class="tab-panel" data-panel="goal">
+                <label for="field_goalTitle">Goal Heading</label>
+                <input id="field_goalTitle" type="text" />
+                <label for="field_goalText">Goal Paragraph</label>
+                <div class="rte-toolbar" data-target="field_goalText">
+                  <button class="btn ghost rte-btn" type="button" data-cmd="bold">Bold</button>
+                  <button class="btn ghost rte-btn" type="button" data-cmd="italic">Italic</button>
+                  <input class="rte-color" type="color" title="Text color" data-cmd="foreColor" value="#ffffff" />
+                  <input class="rte-color" type="color" title="Highlight" data-cmd="hiliteColor" value="#fff3a3" />
+                  <button class="btn ghost rte-btn" type="button" data-cmd="insertUnorderedList">Bullets</button>
+                </div>
+                <div id="field_goalText" class="rte-editor" contenteditable="true"></div>
               </section>
 
               <section class="tab-panel" data-panel="process">

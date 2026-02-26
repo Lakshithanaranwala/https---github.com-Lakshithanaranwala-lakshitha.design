@@ -24,6 +24,10 @@ const makeDefaultCaseData = (title = 'New Case Study') => ({
   badge: title,
   heroImage: DEFAULT_IMAGE.hero,
   displayImage: DEFAULT_IMAGE.ui,
+  typography: {
+    paragraphSize: 16,
+    problemParagraphSize: 16,
+  },
   overview: {
     text: 'Add a short overview paragraph for this case study.',
     role: 'Product Designer',
@@ -31,6 +35,10 @@ const makeDefaultCaseData = (title = 'New Case Study') => ({
     duration: 'TBD',
   },
   problem: 'Add problem statement from admin.',
+  goal: {
+    title: 'Goal',
+    text: 'Define a clear target outcome for the redesigned experience and align design decisions to measurable user impact.',
+  },
   process: {
     discover: { images: [DEFAULT_IMAGE.discover, DEFAULT_IMAGE.discover], text: 'Add discover insights from admin.' },
     define: { image: DEFAULT_IMAGE.define, text: 'Add define insights from admin.' },
@@ -197,6 +205,12 @@ const getFieldValue = (id) => {
   return input.value;
 };
 
+const normalizeParagraphSize = (value) => {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) return 16;
+  return Math.min(36, Math.max(12, Math.round(numeric)));
+};
+
 const readAsDataUrl = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -286,6 +300,8 @@ const loadCaseIntoForm = (caseId) => {
 
   setInputValue('field_title', data.title);
   setInputValue('field_badge', data.badge || caseObj?.tag || caseObj?.label || '');
+  setInputValue('field_paragraphSize', normalizeParagraphSize(data.typography?.paragraphSize));
+  setInputValue('field_problemParagraphSize', normalizeParagraphSize(data.typography?.problemParagraphSize || data.typography?.paragraphSize));
   setInputValue('field_heroImage', data.heroImage);
   setInputValue('field_displayImage', data.displayImage || data.heroImage || DEFAULT_IMAGE.ui);
   setInputValue('field_overviewText', data.overview.text);
@@ -293,6 +309,8 @@ const loadCaseIntoForm = (caseId) => {
   setInputValue('field_tools', data.overview.tools);
   setInputValue('field_duration', data.overview.duration);
   setInputValue('field_problem', data.problem);
+  setInputValue('field_goalTitle', data.goal?.title || 'Goal');
+  setInputValue('field_goalText', data.goal?.text || '');
 
   setInputValue('field_discoverText', data.process.discover.text);
   setInputValue('field_discoverImage1', data.process.discover.images[0]);
@@ -316,6 +334,10 @@ const loadCaseIntoForm = (caseId) => {
 const collectFormData = () => ({
   title: getFieldValue('field_title'),
   badge: getFieldValue('field_badge'),
+  typography: {
+    paragraphSize: normalizeParagraphSize(getFieldValue('field_paragraphSize')),
+    problemParagraphSize: normalizeParagraphSize(getFieldValue('field_problemParagraphSize')),
+  },
   heroImage: getFieldValue('field_heroImage'),
   displayImage: getFieldValue('field_displayImage'),
   overview: {
@@ -325,6 +347,10 @@ const collectFormData = () => ({
     duration: getFieldValue('field_duration'),
   },
   problem: getFieldValue('field_problem'),
+  goal: {
+    title: getFieldValue('field_goalTitle'),
+    text: getFieldValue('field_goalText'),
+  },
   process: {
     discover: {
       text: getFieldValue('field_discoverText'),
