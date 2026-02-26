@@ -87,8 +87,8 @@
         "discover": {
           "text": "To gain a deep understanding of Lasenda's operational challenges and user needs, a <b>5 day interview based research phase</b> was conducted with key stakeholders and end users. These sessions focused on uncovering daily workflows, <b>identifying pain points</b> within the existing Hawksoft system, and understanding unmet requirements related to task management, data security and deadline handling. Insights gathered from these interviews directly informed the product requirements and helped prioritized features that would deliver the greatest impact in the LSE system.",
           "images": [
-            "assets/case-discover.svg",
-            "assets/case-discover.svg"
+            "https://raw.githubusercontent.com/Lakshithanaranwala/https---github.com-Lakshithanaranwala-lakshitha.design/main/assets/case%20study%20images/LSE-Interview-png.jpg",
+            "https://raw.githubusercontent.com/Lakshithanaranwala/https---github.com-Lakshithanaranwala-lakshitha.design/main/assets/case%20study%20images/LSE-discovery-png.jpg"
           ]
         },
         "define": {
