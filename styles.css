@@ -123,6 +123,10 @@ a.brand {
   line-height: 1.2;
   margin-top: 0;
 }
+.cs-principles-title {
+  font-size: clamp(2rem, 5vw, 2.4rem);
+  padding-bottom: 2.5rem;
+}
 
 img {
   max-width: 100%;
@@ -1140,11 +1144,16 @@ html[data-theme='dark'] .case-studies-page .principle-icon {
 
 .cs-hero {
   padding-top: 0.3rem;
+  text-align: center;
+  display: grid;
+  gap: 1.2rem;
+  justify-items: center;
 }
 
 .cs-hero-media {
   position: relative;
-  
+  height: 100%;
+  width: 100%;
   border-radius: calc(var(--radius) + 1px);
   overflow: hidden;
   min-height: clamp(260px, 42vw, 420px);
@@ -1157,24 +1166,10 @@ html[data-theme='dark'] .case-studies-page .principle-icon {
   object-fit: cover;
 }
 
-.cs-hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(12, 22, 35, 0.14), rgba(12, 22, 35, 0.72));
-}
-
-.cs-hero-copy {
-  position: absolute;
-  left: clamp(1rem, 2vw, 1.6rem);
-  right: clamp(1rem, 2vw, 1.6rem);
-  bottom: clamp(1rem, 2.5vw, 1.8rem);
-  color: #fff;
-}
-
-.cs-hero-copy h1 {
+.cs-hero-title {
   margin: 0;
-  max-width: 18ch;
-  font-size: clamp(1.8rem, 4.6vw, 3.1rem);
+  max-width: 22ch;
+  font-size: clamp(5.2rem, 5.4vw, 3.6rem);
 }
 
 .cs-overview-grid {

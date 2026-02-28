@@ -520,7 +520,7 @@ const applyCaseStudyContent = () => {
     caseLayoutNode.style.setProperty('--cs-problem-size', `${safeProblemSize}px`);
   }
 
-  setText('.cs-hero-copy h1', data.title);
+  setText('.cs-hero-title', data.title);
   setHTML('.cs-overview-text', data.overview?.text);
   setText('.cs-overview-grid article:nth-child(1) p', data.overview?.role);
   setText('.cs-overview-grid article:nth-child(2) p', data.overview?.tools);
