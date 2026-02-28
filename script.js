@@ -378,6 +378,53 @@ const initStudyCarousel = () => {
   update();
 };
 
+const initCaseStudiesGrid = () => {
+  const grid = document.getElementById('caseStudiesGrid');
+  if (!grid) return;
+
+  const storedData = getStoredCaseData();
+  const cases = getAllCases();
+
+  grid.innerHTML = cases
+    .map((item) => {
+      const data = storedData[item.id] || {};
+      const title = data.title || item.title || item.label;
+      const summaryRaw = data.overview?.text || data.problem || item.summary || 'Open the full case study for details.';
+      const summary = summaryRaw.replace(/<[^>]*>/g, '').trim();
+      const role = data.overview?.role || item.role || 'Product Designer';
+      const tools = data.overview?.tools || item.tools || 'Figma';
+      const duration = data.overview?.duration || item.duration || 'TBD';
+      const tag = data.badge || item.tag || item.label || 'Case Study';
+      const href = item.path || `case-study-custom.html?case=${encodeURIComponent(item.id)}`;
+      const displayImage = data.displayImage || data.heroImage || item.displayImage || 'assets/case-ui.svg';
+      const lockIcon = item.locked
+        ? '<span class="tag-lock" aria-label="Locked case study" title="Locked">🔒</span>'
+        : '';
+
+      return `
+        <article class="study-card">
+          <figure class="study-card-media">
+            <img src="${displayImage}" alt="${title} display image" loading="lazy" />
+          </figure>
+          <div class="study-card-content">
+            <span class="tag">${tag}${lockIcon}</span>
+            <h3>${title}</h3>
+            <p>${summary}</p>
+            <ul class="study-card-meta">
+              <li>Role: ${role}</li>
+              <li>Tools: ${tools}</li>
+              <li>Duration: ${duration}</li>
+            </ul>
+          </div>
+          <div class="study-card-footer">
+            <a href="${href}" aria-label="Read full case study for ${title}">Read Full Case Study</a>
+          </div>
+        </article>
+      `;
+    })
+    .join('');
+};
+
 const setText = (selector, value, scope = document) => {
   const node = scope.querySelector(selector);
   if (node && typeof value === 'string') node.textContent = value;
@@ -523,6 +570,7 @@ const initCaseDataAndRender = async () => {
   initCaseLockGate();
   initStudyCarousel();
   initDesignCarousel();
+  initCaseStudiesGrid();
 };
 
 initCaseDataAndRender();
