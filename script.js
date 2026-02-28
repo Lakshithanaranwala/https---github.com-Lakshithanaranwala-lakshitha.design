@@ -132,10 +132,23 @@ const BASE_CASES = [
   },
 ];
 
+const normalizeCaseData = (raw) => {
+  if (!raw || typeof raw !== 'object') return raw;
+  const data = { ...raw };
+  if (!data.impact) {
+    const legacy = data.solution;
+    const legacyImage = Array.isArray(legacy?.images) ? legacy.images[0] : legacy?.image;
+    data.impact = { title: 'Impact', image: legacyImage || 'assets/case-solution.svg' };
+  }
+  if (data.solution) delete data.solution;
+  return data;
+};
+
 const getStoredCaseData = () => {
   try {
     const raw = localStorage.getItem(CASE_STORAGE_KEY);
-    return raw ? JSON.parse(raw) : {};
+    const parsed = raw ? JSON.parse(raw) : {};
+    return Object.fromEntries(Object.entries(parsed).map(([key, value]) => [key, normalizeCaseData(value)]));
   } catch {
     return {};
   }
@@ -156,7 +169,10 @@ const loadRemoteCaseData = async () => {
     if (!response.ok) return false;
     const payload = await response.json();
     if (payload?.caseData && typeof payload.caseData === 'object') {
-      localStorage.setItem(CASE_STORAGE_KEY, JSON.stringify(payload.caseData));
+      const normalized = Object.fromEntries(
+        Object.entries(payload.caseData).map(([key, value]) => [key, normalizeCaseData(value)])
+      );
+      localStorage.setItem(CASE_STORAGE_KEY, JSON.stringify(normalized));
     }
     if (Array.isArray(payload?.caseList)) {
       localStorage.setItem(CASE_LIST_KEY, JSON.stringify(payload.caseList));
@@ -494,10 +510,10 @@ const applyCaseStudyContent = () => {
     setHTML('p', data.process?.deliver?.text, subsections[3]);
   }
 
-  const solutionImages = document.querySelectorAll('.cs-section:last-of-type .cs-two-col img');
-  setImage(solutionImages[0], data.solution?.images?.[0]);
-  setImage(solutionImages[1], data.solution?.images?.[1]);
-  setHTML('.cs-highlight', data.solution?.text);
+  const impactTitleNode = document.querySelector('.cs-impact .section-head h2');
+  if (impactTitleNode && typeof data.impact?.title === 'string') impactTitleNode.textContent = data.impact.title;
+  const impactImage = document.querySelector('.cs-impact .cs-single-image img');
+  setImage(impactImage, data.impact?.image);
 };
 
 const initCaseDataAndRender = async () => {

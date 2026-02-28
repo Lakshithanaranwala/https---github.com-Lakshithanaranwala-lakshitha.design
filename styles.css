@@ -1225,16 +1225,6 @@ section {
   font-size: var(--cs-paragraph-size);
 }
 
-.cs-highlight {
-  margin-top: 0.8rem;
-  padding: 0.9rem 1rem;
-  border-left: 4px solid var(--accent-2);
-  border-radius: 8px;
-  background: var(--frost-bg);
-  color: var(--text);
-  font-weight: 600;
-  font-size: var(--cs-paragraph-size);
-}
 
 .case-password-gate {
   min-height: 100vh;

@@ -104,7 +104,7 @@
               <button class="btn ghost tab-btn" type="button" data-tab="problem">Problem Statement</button>
               <button class="btn ghost tab-btn" type="button" data-tab="goal">Goal</button>
               <button class="btn ghost tab-btn" type="button" data-tab="process">Process</button>
-              <button class="btn ghost tab-btn" type="button" data-tab="solution">Solution</button>
+              <button class="btn ghost tab-btn" type="button" data-tab="impact">Impact</button>
             </div>
 
             <form id="editorForm" class="admin-form">
@@ -231,22 +231,12 @@
                 <div id="designItemsEditor"></div>
               </section>
 
-              <section class="tab-panel" data-panel="solution">
-                <label for="field_solutionText">Solution Highlight Text</label>
-                <div class="rte-toolbar" data-target="field_solutionText">
-                  <button class="btn ghost rte-btn" type="button" data-cmd="bold">Bold</button>
-                  <button class="btn ghost rte-btn" type="button" data-cmd="italic">Italic</button>
-                  <input class="rte-color" type="color" title="Text color" data-cmd="foreColor" value="#ffffff" />
-                  <input class="rte-color" type="color" title="Highlight" data-cmd="hiliteColor" value="#fff3a3" />
-                  <button class="btn ghost rte-btn" type="button" data-cmd="insertUnorderedList">Bullets</button>
-                </div>
-                <div id="field_solutionText" class="rte-editor" contenteditable="true"></div>
-                <label>Solution Image 1</label>
-                <div class="img-row"><input id="field_solutionImage1" type="text" /><input id="upload_solutionImage1" type="file" accept="image/*" /><button class="btn ghost delete-image" data-target="field_solutionImage1" type="button">Delete</button></div>
-                <img id="preview_solutionImage1" class="img-preview" alt="Solution image 1 preview" />
-                <label>Solution Image 2</label>
-                <div class="img-row"><input id="field_solutionImage2" type="text" /><input id="upload_solutionImage2" type="file" accept="image/*" /><button class="btn ghost delete-image" data-target="field_solutionImage2" type="button">Delete</button></div>
-                <img id="preview_solutionImage2" class="img-preview" alt="Solution image 2 preview" />
+              <section class="tab-panel" data-panel="impact">
+                <label for="field_impactTitle">Impact Heading</label>
+                <input id="field_impactTitle" type="text" />
+                <label>Impact Image</label>
+                <div class="img-row"><input id="field_impactImage" type="text" /><input id="upload_impactImage" type="file" accept="image/*" /><button class="btn ghost delete-image" data-target="field_impactImage" type="button">Delete</button></div>
+                <img id="preview_impactImage" class="img-preview" alt="Impact image preview" />
               </section>
 
               <div class="admin-actions">

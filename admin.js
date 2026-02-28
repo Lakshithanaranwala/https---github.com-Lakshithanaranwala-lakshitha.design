@@ -48,8 +48,23 @@ const makeDefaultCaseData = (title = 'New Case Study') => ({
     },
     deliver: { text: 'Add deliver details from admin.' },
   },
-  solution: { images: [DEFAULT_IMAGE.solution, DEFAULT_IMAGE.solution], text: 'Add solution highlight from admin.' },
+  impact: { title: 'Impact', image: DEFAULT_IMAGE.solution },
 });
+
+const normalizeCaseData = (raw) => {
+  if (!raw || typeof raw !== 'object') return raw;
+  const data = clone(raw);
+  if (!data.impact) {
+    const legacy = data.solution;
+    const legacyImage = Array.isArray(legacy?.images) ? legacy.images[0] : legacy?.image;
+    data.impact = {
+      title: 'Impact',
+      image: legacyImage || DEFAULT_IMAGE.solution,
+    };
+  }
+  if (data.solution) delete data.solution;
+  return data;
+};
 
 const DEFAULTS = {
   onboarding: makeDefaultCaseData('Onboarding Redesign for Better Activation'),
@@ -134,7 +149,10 @@ const loadCaseDataRemote = async () => {
     if (!response.ok) return { ok: false };
     const payload = await response.json();
     if (payload?.caseData && typeof payload.caseData === 'object') {
-      setStore(payload.caseData);
+      const normalized = Object.fromEntries(
+        Object.entries(payload.caseData).map(([key, value]) => [key, normalizeCaseData(value)])
+      );
+      setStore(normalized);
     }
     if (Array.isArray(payload?.caseList)) {
       setCaseList(payload.caseList);
@@ -174,10 +192,10 @@ const updateCaseActionButtons = (caseObj) => {
 
 const getCaseData = (caseId) => {
   const store = getStore();
-  if (store[caseId]) return clone(store[caseId]);
-  if (DEFAULTS[caseId]) return clone(DEFAULTS[caseId]);
+  if (store[caseId]) return normalizeCaseData(store[caseId]);
+  if (DEFAULTS[caseId]) return normalizeCaseData(DEFAULTS[caseId]);
   const caseEntry = getCaseById(caseId);
-  return makeDefaultCaseData(caseEntry?.label || 'New Case Study');
+  return normalizeCaseData(makeDefaultCaseData(caseEntry?.label || 'New Case Study'));
 };
 
 const setInputValue = (id, value) => {
@@ -326,9 +344,8 @@ const loadCaseIntoForm = (caseId) => {
     setInputValue(`field_designText${i}`, item.text);
   });
 
-  setInputValue('field_solutionText', data.solution.text);
-  setInputValue('field_solutionImage1', data.solution.images[0]);
-  setInputValue('field_solutionImage2', data.solution.images[1]);
+  setInputValue('field_impactTitle', data.impact?.title || 'Impact');
+  setInputValue('field_impactImage', data.impact?.image || DEFAULT_IMAGE.solution);
 };
 
 const collectFormData = () => ({
@@ -369,9 +386,9 @@ const collectFormData = () => ({
     },
     deliver: { text: getFieldValue('field_deliverText') },
   },
-  solution: {
-    text: getFieldValue('field_solutionText'),
-    images: [getFieldValue('field_solutionImage1'), getFieldValue('field_solutionImage2')],
+  impact: {
+    title: getFieldValue('field_impactTitle'),
+    image: getFieldValue('field_impactImage'),
   },
 });
 
