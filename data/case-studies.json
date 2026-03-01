@@ -297,7 +297,7 @@
       "id": "skyone",
       "label": "Sky one: All in one",
       "path": "case-study-skyone.html",
-      "archived": false,
+      "archived": true,
       "locked": false
     }
   ]
