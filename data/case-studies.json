@@ -129,6 +129,76 @@
         "title": "Final Outcome",
         "image": "https://raw.githubusercontent.com/Lakshithanaranwala/https---github.com-Lakshithanaranwala-lakshitha.design/main/assets/case%20study%20images/impact-v2-png.jpg"
       }
+    },
+    "skyone": {
+      "title": "Sky one: All in one",
+      "badge": "Sky one: All in one",
+      "typography": {
+        "paragraphSize": 16,
+        "problemParagraphSize": 16
+      },
+      "heroImage": "assets/case-bg.svg",
+      "displayImage": "assets/case-ui.svg",
+      "overview": {
+        "text": "Add a short overview paragraph for this case study.",
+        "role": "Product Designer",
+        "tools": "Figma",
+        "duration": "TBD"
+      },
+      "problem": "Add problem statement from admin.",
+      "goal": {
+        "title": "Goal",
+        "text": "Define a clear target outcome for the redesigned experience and align design decisions to measurable user impact."
+      },
+      "process": {
+        "discover": {
+          "text": "Add discover insights from admin.",
+          "images": [
+            "assets/case-discover.svg",
+            "assets/case-discover.svg"
+          ]
+        },
+        "define": {
+          "text": "Add define insights from admin.",
+          "image": "assets/case-define.svg"
+        },
+        "design": {
+          "intro": "This section highlights key interface explorations and final UI decisions that shaped the experience.",
+          "items": [
+            {
+              "image": "assets/case-ui.svg",
+              "text": "Design screen 1 description."
+            },
+            {
+              "image": "assets/case-ui.svg",
+              "text": "Design screen 2 description."
+            },
+            {
+              "image": "assets/case-ui.svg",
+              "text": "Design screen 3 description."
+            },
+            {
+              "image": "assets/case-ui.svg",
+              "text": "Design screen 4 description."
+            },
+            {
+              "image": "assets/case-ui.svg",
+              "text": "Design screen 5 description."
+            },
+            {
+              "image": "assets/case-ui.svg",
+              "text": "Design screen 6 description."
+            }
+          ]
+        },
+        "deliver": {
+          "text": "Add deliver details from admin."
+        }
+      },
+      "impact": {
+        "title": "Impact",
+        "image": "assets/case-solution.svg"
+      }
     }
   },
   "caseList": [
