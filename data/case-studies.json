@@ -10,10 +10,10 @@
       "heroImage": "https://raw.githubusercontent.com/Lakshithanaranwala/https---github.com-Lakshithanaranwala-lakshitha.design/main/assets/case%20study%20images/LSE-png-rm5ge.jpg",
       "displayImage": "https://raw.githubusercontent.com/Lakshithanaranwala/https---github.com-Lakshithanaranwala-lakshitha.design/main/assets/case%20study%20images/card-image-png.jpg",
       "overview": {
-        "text": "Add a short overview paragraph for this case study.",
-        "role": "Product Designer",
-        "tools": "Figma",
-        "duration": "TBD"
+        "text": "The Sleep and CPAP Center relied on Google Calendar to manage <b>patient appointments, insurance information, and doctor referrals</b>, resulting in scattered data, <b>inefficient workflows</b>, and difficulties tracking insurance claims. To address these challenges, I designed a custom ERP system tailored to the clinic’s operational needs. The solution <b>centralized patient management</b>, <b>streamlined appointment scheduling</b>, and enabled <b>structured insurance claim tracking</b>, improving administrative efficiency and reducing manual workload for staff. This project focused on transforming a fragmented process into an organized, scalable healthcare management system through user-centered design.",
+        "role": "UI/UX Lead",
+        "tools": "Figma | Figjam | Illustrator",
+        "duration": "2 Months"
       },
       "problem": "Add problem statement from admin.",
       "goal": {
