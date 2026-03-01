@@ -1,9 +1,14 @@
 {
   "caseData": {
     "analytics": {
-      "title": "Test Environment case study",
-      "badge": "Information Architecture for Analytics Platform",
+      "title": "From Calendar Chaos to Clinical Efficiency",
+      "badge": "ERP System",
+      "typography": {
+        "paragraphSize": 16,
+        "problemParagraphSize": 16
+      },
       "heroImage": "https://raw.githubusercontent.com/Lakshithanaranwala/https---github.com-Lakshithanaranwala-lakshitha.design/main/assets/case%20study%20images/aishot-1351-jpg.jpg",
+      "displayImage": "https://raw.githubusercontent.com/Lakshithanaranwala/https---github.com-Lakshithanaranwala-lakshitha.design/main/assets/case%20study%20images/aishot-1351-jpg.jpg",
       "overview": {
         "text": "Add a short overview paragraph for this case study.",
         "role": "Product Designer",
@@ -11,6 +16,10 @@
         "duration": "TBD"
       },
       "problem": "Add problem statement from admin.",
+      "goal": {
+        "title": "Goal",
+        "text": ""
+      },
       "process": {
         "discover": {
           "text": "Add discover insights from admin.",
@@ -24,6 +33,7 @@
           "image": "assets/case-define.svg"
         },
         "design": {
+          "intro": "",
           "items": [
             {
               "image": "assets/case-ui.svg",
@@ -281,7 +291,7 @@
     },
     {
       "id": "analytics",
-      "label": "Test Environment case study",
+      "label": "From Calendar Chaos to Clinical Efficiency",
       "path": "case-study-analytics.html",
       "archived": false,
       "locked": false
