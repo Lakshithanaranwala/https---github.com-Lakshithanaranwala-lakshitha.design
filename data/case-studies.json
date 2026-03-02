@@ -22,7 +22,7 @@
       },
       "process": {
         "discover": {
-          "text": "Add discover insights from admin.",
+          "text": "User interviews revealed that administrative staff relied heavily on<b> manual processes to manage daily operations.</b> Google Calendar was used as a central tool, but it lacked structure for handling healthcare-specific data such as patient histories, insurance details, and referral tracking. Staff frequently switched between entries to locate information, increasing cognitive load and slowing down workflows. Insurance claim follow-ups were particularly challenging due to the absence of status tracking, leading to delays and missed updates. Users expressed a strong need for a centralized system that could simplify tasks, improve visibility, and reduce repetitive work.<div><br></div><div><b>Key Findings:</b><br><ul><li>Patient information was scattered across multiple calendar entries</li><li>Insurance claim status was difficult to track and monitor</li><li>Staff spent significant time searching for and updating information</li><li>Manual data handling increased the risk of errors</li><li>No standardized workflow for managing referrals and claims</li><li>Users needed a centralized and structured management system</li><li>Visibility into daily operations and patient progress was limited</li></ul></div>",
           "images": [
             "https://raw.githubusercontent.com/Lakshithanaranwala/https---github.com-Lakshithanaranwala-lakshitha.design/main/assets/case%20study%20images/CPAP--Interview-png.jpg",
             "https://raw.githubusercontent.com/Lakshithanaranwala/https---github.com-Lakshithanaranwala-lakshitha.design/main/assets/case%20study%20images/CPAP-user-flows-png.jpg"
