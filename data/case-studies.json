@@ -29,7 +29,7 @@
           ]
         },
         "define": {
-          "text": "Add define insights from admin.",
+          "text": "Based on research insights, several opportunities emerged to improve the clinic’s workflow and operational efficiency:<div><br></div><div><div><b>How Might We</b></div><div><ul><li>How might we centralize patient and insurance information to reduce data fragmentation?</li><li>How might we help staff quickly track insurance claim progress?</li><li>How might we simplify appointment management for administrative users?</li><li>How might we reduce manual work and repetitive data entry?</li><li>How might we improve visibility into patient and clinic operations?</li></ul><div><b>Solution:</b></div></div><div><ul><li>Create a centralized platform to manage patients, appointments, referrals, and insurance data</li><li>Design structured data entry to reduce errors and inconsistencies</li><li>Provide clear visibility into insurance claim status and progress</li><li>Simplify appointment scheduling with healthcare-specific workflows</li><li>Reduce administrative workload through intuitive navigation and automation</li><li>Enable quick access to patient information during daily operations</li><li>Support scalable workflows as the clinic grows</li></ul></div></div>",
           "image": "https://raw.githubusercontent.com/Lakshithanaranwala/https---github.com-Lakshithanaranwala-lakshitha.design/main/assets/case%20study%20images/user-flows-cpap-png.jpg"
         },
         "design": {
