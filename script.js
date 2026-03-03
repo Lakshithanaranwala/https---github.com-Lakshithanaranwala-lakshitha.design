@@ -378,6 +378,39 @@ const initStudyCarousel = () => {
   update();
 };
 
+const initCaseStudyStack = () => {
+  const stack = document.getElementById('caseStudyStack');
+  if (!stack) return;
+  const storedData = getStoredCaseData();
+  const cases = getAllCases();
+
+  stack.innerHTML = cases
+    .map((item) => {
+      const data = storedData[item.id] || {};
+      const title = data.title || item.title || item.label;
+      const tag = data.badge || item.tag || item.label || 'Case Study';
+      const href = item.path || `case-study-custom.html?case=${encodeURIComponent(item.id)}`;
+      const displayImage = data.displayImage || data.heroImage || item.displayImage || 'assets/case-ui.svg';
+      const lockIcon = item.locked
+        ? '<span class="tag-lock" aria-label="Locked case study" title="Locked">🔒</span>'
+        : '';
+
+      return `
+        <article class="case-study-spotlight">
+          <figure class="spotlight-media">
+            <img src="${displayImage}" alt="${title} display image" loading="lazy" />
+          </figure>
+          <div class="spotlight-content">
+            <span class="tag">${tag}${lockIcon}</span>
+            <h3>${title}</h3>
+            <a href="${href}" aria-label="Read full case study for ${title}">Read the case study →</a>
+          </div>
+        </article>
+      `;
+    })
+    .join('');
+};
+
 const initCaseStudiesGrid = () => {
   const grid = document.getElementById('caseStudiesGrid');
   if (!grid) return;
@@ -569,6 +602,7 @@ const initCaseDataAndRender = async () => {
   applyCaseStudyContent();
   initCaseLockGate();
   initStudyCarousel();
+  initCaseStudyStack();
   initDesignCarousel();
   initCaseStudiesGrid();
 };
