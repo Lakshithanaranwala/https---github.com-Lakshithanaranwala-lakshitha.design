@@ -518,9 +518,23 @@ section {
   gap: 1.2rem;
   padding: 1.4rem;
   border-radius: 18px;
-  background: #ffffff;
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.48));
   border: 1px solid rgba(15, 23, 42, 0.08);
   box-shadow: 0 24px 48px rgba(15, 23, 42, 0.08), 0 2px 12px rgba(15, 23, 42, 0.06);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.case-study-spotlight::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  background: radial-gradient(240px 120px at 12% 0%, rgba(255, 255, 255, 0.65), transparent 60%),
+    radial-gradient(220px 120px at 90% 100%, rgba(255, 255, 255, 0.35), transparent 62%);
+  pointer-events: none;
 }
 
 .spotlight-media {
@@ -560,9 +574,14 @@ section {
 }
 
 html[data-theme='dark'] .case-study-spotlight {
-  background: #0b0d11;
+  background: linear-gradient(140deg, rgba(20, 24, 32, 0.82), rgba(12, 14, 18, 0.55));
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45), 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+html[data-theme='dark'] .case-study-spotlight::after {
+  background: radial-gradient(240px 120px at 12% 0%, rgba(255, 255, 255, 0.18), transparent 60%),
+    radial-gradient(220px 120px at 90% 100%, rgba(255, 255, 255, 0.12), transparent 62%);
 }
 
 html[data-theme='dark'] .spotlight-media img {
