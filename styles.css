@@ -621,6 +621,10 @@ html[data-theme='dark'] .spotlight-content a {
   justify-content: center;
 }
 
+.case-studies .carousel-actions {
+  margin-top: 2rem;
+}
+
 .carousel-btn {
   min-width: 52px;
 }
