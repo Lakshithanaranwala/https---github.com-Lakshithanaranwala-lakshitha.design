@@ -293,7 +293,7 @@
       "id": "analytics",
       "label": "From Calendar Chaos to Clinical Efficiency",
       "path": "case-study-analytics.html",
-      "archived": true,
+      "archived": false,
       "locked": false
     },
     {
