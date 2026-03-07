@@ -104,6 +104,7 @@ const editorForm = $('#editorForm');
 const saveMessage = $('#saveMessage');
 const uploadStatus = $('#uploadStatus');
 const resetCaseBtn = $('#resetCaseBtn');
+const resetClicksBtn = $('#resetClicksBtn');
 const archiveCaseBtn = $('#archiveCaseBtn');
 const lockCaseBtn = $('#lockCaseBtn');
 const designItemsEditor = $('#designItemsEditor');
@@ -671,6 +672,24 @@ resetCaseBtn.addEventListener('click', () => {
 });
 
 if (adminLogoutBtn) adminLogoutBtn.addEventListener('click', logoutApp);
+
+if (resetClicksBtn) {
+  resetClicksBtn.addEventListener('click', async () => {
+    if (!currentCaseId) return;
+    const store = getStore();
+    if (!store[currentCaseId]) return;
+    store[currentCaseId].stats = {
+      ...(store[currentCaseId].stats || {}),
+      caseStudyClicks: 0,
+    };
+    setStore(store);
+    renderCaseList();
+    const remoteResult = await saveCaseDataRemote();
+    saveMessage.textContent = remoteResult.ok
+      ? 'Click counter reset and synced.'
+      : `Click counter reset locally. Remote sync failed. ${remoteResult.error}`;
+  });
+}
 
 if (choiceCaseStudies) {
   choiceCaseStudies.addEventListener('click', async () => {
