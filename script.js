@@ -81,6 +81,21 @@ const CASE_DATA_ENDPOINT = '/api/case-data';
 const DESIGN_STORAGE_KEY = 'designWorkDataV1';
 const DESIGN_DATA_ENDPOINT = '/api/design-data';
 
+const saveCaseDataRemote = (payload) => {
+  const body = JSON.stringify(payload);
+  if (navigator.sendBeacon) {
+    const blob = new Blob([body], { type: 'application/json' });
+    navigator.sendBeacon(CASE_DATA_ENDPOINT, blob);
+    return;
+  }
+  fetch(CASE_DATA_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body,
+    keepalive: true,
+  }).catch(() => {});
+};
+
 const BASE_CASES = [
   {
     id: 'onboarding',
@@ -135,6 +150,11 @@ const BASE_CASES = [
 const normalizeCaseData = (raw) => {
   if (!raw || typeof raw !== 'object') return raw;
   const data = { ...raw };
+  if (!data.stats) {
+    data.stats = { caseStudyClicks: 0 };
+  } else if (typeof data.stats.caseStudyClicks !== 'number') {
+    data.stats.caseStudyClicks = Number(data.stats.caseStudyClicks) || 0;
+  }
   if (!data.impact) {
     const legacy = data.solution;
     const legacyImage = Array.isArray(legacy?.images) ? legacy.images[0] : legacy?.image;
@@ -181,6 +201,22 @@ const loadRemoteCaseData = async () => {
   } catch {
     return false;
   }
+};
+
+const recordCaseStudyClick = (caseId) => {
+  if (!caseId) return;
+  const data = getStoredCaseData();
+  if (!data[caseId]) return;
+  const current = data[caseId].stats?.caseStudyClicks || 0;
+  data[caseId] = {
+    ...data[caseId],
+    stats: {
+      ...(data[caseId].stats || {}),
+      caseStudyClicks: current + 1,
+    },
+  };
+  localStorage.setItem(CASE_STORAGE_KEY, JSON.stringify(data));
+  saveCaseDataRemote({ caseData: data, caseList: getStoredCaseList() });
 };
 
 const getStoredDesignData = () => {
@@ -403,7 +439,7 @@ const initCaseStudyStack = () => {
           <div class="spotlight-content">
             <span class="tag">${tag}${lockIcon}</span>
             <h3>${title}</h3>
-            <a href="${href}" aria-label="Read full case study for ${title}">Read the case study →</a>
+            <a href="${href}" data-case-id="${item.id}" aria-label="Read full case study for ${title}">Read the case study →</a>
           </div>
         </article>
       `;
@@ -450,12 +486,21 @@ const initCaseStudiesGrid = () => {
             </ul>
           </div>
           <div class="study-card-footer">
-            <a href="${href}" aria-label="Read full case study for ${title}">Read Full Case Study</a>
+            <a href="${href}" data-case-id="${item.id}" aria-label="Read full case study for ${title}">Read Full Case Study</a>
           </div>
         </article>
       `;
     })
     .join('');
+};
+
+const initCaseStudyClickTracking = () => {
+  const links = document.querySelectorAll('a[data-case-id]');
+  links.forEach((link) => {
+    link.addEventListener('click', () => {
+      recordCaseStudyClick(link.dataset.caseId);
+    });
+  });
 };
 
 const setText = (selector, value, scope = document) => {
@@ -605,6 +650,7 @@ const initCaseDataAndRender = async () => {
   initCaseStudyStack();
   initDesignCarousel();
   initCaseStudiesGrid();
+  initCaseStudyClickTracking();
 };
 
 initCaseDataAndRender();

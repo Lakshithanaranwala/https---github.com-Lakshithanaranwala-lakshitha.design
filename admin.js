@@ -24,6 +24,9 @@ const makeDefaultCaseData = (title = 'New Case Study') => ({
   badge: title,
   heroImage: DEFAULT_IMAGE.hero,
   displayImage: DEFAULT_IMAGE.ui,
+  stats: {
+    caseStudyClicks: 0,
+  },
   typography: {
     paragraphSize: 16,
     problemParagraphSize: 16,
@@ -54,6 +57,11 @@ const makeDefaultCaseData = (title = 'New Case Study') => ({
 const normalizeCaseData = (raw) => {
   if (!raw || typeof raw !== 'object') return raw;
   const data = clone(raw);
+  if (!data.stats) {
+    data.stats = { caseStudyClicks: 0 };
+  } else if (typeof data.stats.caseStudyClicks !== 'number') {
+    data.stats.caseStudyClicks = Number(data.stats.caseStudyClicks) || 0;
+  }
   if (!data.impact) {
     const legacy = data.solution;
     const legacyImage = Array.isArray(legacy?.images) ? legacy.images[0] : legacy?.image;
@@ -513,10 +521,12 @@ const initRichTextEditors = () => {
 
 const renderCaseList = () => {
   const list = getCaseList();
+  const store = getStore();
   caseListNode.innerHTML = list
     .map((c) => {
       const flags = `${c.archived ? ' (Archived)' : ''}${c.locked ? ' (Locked)' : ''}`;
-      return `<button class="btn ghost" type="button" data-case-id="${c.id}">${c.label}${flags}</button>`;
+      const clicks = store?.[c.id]?.stats?.caseStudyClicks || 0;
+      return `<button class="btn ghost" type="button" data-case-id="${c.id}">${c.label}${flags} — ${clicks} clicks</button>`;
     })
     .join('');
 
@@ -621,7 +631,12 @@ editorForm.addEventListener('submit', async (event) => {
   if (!currentCaseId) return;
 
   const store = getStore();
-  store[currentCaseId] = collectFormData();
+  const existing = store[currentCaseId] || {};
+  const next = collectFormData();
+  if (existing.stats) {
+    next.stats = existing.stats;
+  }
+  store[currentCaseId] = next;
   const saved = setStore(store);
   if (!saved) {
     saveMessage.textContent = 'Save failed: image data is too large for browser storage. Upload smaller images.';
