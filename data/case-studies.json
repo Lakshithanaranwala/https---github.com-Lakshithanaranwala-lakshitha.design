@@ -68,6 +68,9 @@
       "impact": {
         "title": "Final Result",
         "image": "https://raw.githubusercontent.com/Lakshithanaranwala/https---github.com-Lakshithanaranwala-lakshitha.design/main/assets/case%20study%20images/cpap-impact-png.jpg"
+      },
+      "stats": {
+        "caseStudyClicks": 0
       }
     },
     "onboarding": {
@@ -138,6 +141,9 @@
       "impact": {
         "title": "Final Outcome",
         "image": "https://raw.githubusercontent.com/Lakshithanaranwala/https---github.com-Lakshithanaranwala-lakshitha.design/main/assets/case%20study%20images/impact-v2-png.jpg"
+      },
+      "stats": {
+        "caseStudyClicks": 1
       }
     },
     "skyone": {
@@ -208,6 +214,9 @@
       "impact": {
         "title": "Impact",
         "image": "assets/case-solution.svg"
+      },
+      "stats": {
+        "caseStudyClicks": 0
       }
     },
     "healthcare": {
@@ -278,6 +287,9 @@
       "impact": {
         "title": "Impact",
         "image": "assets/case-solution.svg"
+      },
+      "stats": {
+        "caseStudyClicks": 0
       }
     }
   },
