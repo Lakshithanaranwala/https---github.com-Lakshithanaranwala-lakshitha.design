@@ -20,9 +20,6 @@ Simple, mobile-responsive portfolio template with:
 3. Replace `assets/cv.pdf` with your real CV file (keep filename same).
 4. Add links for each "Read Full Case Study" CTA.
 
-## Admin
-- Admin password: `Lakshitha123@`
-- Case lock password: `LakshithaCS`
 
 ### GitHub uploads (Vercel)
 To upload images from the CMS into your GitHub repo `assets/` folder, deploy on Vercel and set these env vars:
