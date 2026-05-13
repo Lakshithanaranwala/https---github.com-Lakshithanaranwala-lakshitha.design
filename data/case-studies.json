@@ -88,7 +88,7 @@
         "tools": "FIGJAM, FIGMA",
         "duration": "3 Months "
       },
-      "problem": "<p><font color=\"#00246b\">\"Outdated CRM causes major<b style=\"\"> inefficiency</b>, <b style=\"\">security risks</b>, and <b style=\"\">missed deadlines</b>.\"</font></p>",
+      "problem": "<p><font color=\"#f8f7f7\">\"Outdated CRM causes major<b style=\"\"> inefficiency</b>, <b style=\"\">security risks</b>, and <b style=\"\">missed deadlines</b>.\"</font></p>",
       "goal": {
         "title": "Transforming workflow through secure, tailored software.",
         "text": "<div><ul><li>Develop a secure, centralized system tailored to Lasenda's workflow.</li><li>Enable clear tracking of employee tasks, workloads and project progress.</li><li>Implement stronger data protection and encryption measures for financial information.</li><li>introduced automated, reliable client-deadline management to reduce missed submission.</li><li>Create a flexible develipment process that adapts to evolving stakeholder needs.</li></ul></div>"
