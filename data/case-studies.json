@@ -15,7 +15,7 @@
         "tools": "Figma | Figjam | Illustrator",
         "duration": "2 Months"
       },
-      "problem": "<font color=\"#000b61\">\"The Sleep and CPAP Center relied on Google Calendar to manage patient, referral, and insurance information, leading to <b>fragmented data, inefficient workflows, and difficulty tracking insurance claims</b>.\"</font>",
+      "problem": "<font color=\"#fafafa\">\"The Sleep and CPAP Center relied on Google Calendar to manage patient, referral, and insurance information, leading to <b style=\"\">fragmented data, inefficient workflows, and difficulty tracking insurance claims</b>.\"</font>",
       "goal": {
         "title": "Design a centralized ERP system to streamline patient management and insurance claim tracking.",
         "text": "<ul><li>Centralize patient, referral, and insurance information in one system</li><li>Simplify appointment scheduling and management</li><li>Enable easy tracking of insurance claims</li><li>Improve workflow efficiency for clinic staff</li><li>Minimize data errors and information loss</li></ul>"
